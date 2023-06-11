@@ -1,11 +1,13 @@
 const indexR = require("./index");
-// const usersR = require("./users");
-// const countriesR = require("./countries");
-// const cakesR = require("./cakes");
+const usersR = require("./users");
+const studentsR = require("./students");
+const teachersR = require("./teachers");
+const eventsR = require("./events");
 
 exports.routeInit = (app) => {
     app.use("/", indexR);
-    // app.use("/countries", countriesR);
-    // app.use("/users", usersR);
-    // app.use("/cakes", cakesR);
+    app.use("/users", usersR);
+    app.use("/students", studentsR);
+    app.use("/teachers", teachersR);
+    app.use("/events", eventsR);
 }
