@@ -17,7 +17,7 @@ let studentSchema = new mongoose.Schema({
   number_of_lessons: Number,
   debt: Number
 });
-exports.studentModel = mongoose.model("students", studentSchema);
+exports.StudentModel = mongoose.model("students", studentSchema);
 exports.createToken = (user_id, user_role) => {
   let token = jwt.sign({ _id: user_id, role: user_role }, config.tokenSecret, { expiresIn: "60mins" });
   return token;
