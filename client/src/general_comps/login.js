@@ -8,7 +8,7 @@ import "./login.css";
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // const nav = useNavigate();
+ const nav = useNavigate();
 
   const onSubForm = (bodyData) => {
     console.log(bodyData);
@@ -20,7 +20,7 @@ export default function Login() {
     try {
       let resp = await doApiMethod(url,"POST",bodyData);
         localStorage.setItem(TOKEN_NAME,resp.data.token);
-        // nav("/admin/users");
+        nav("/admin/users");
         console.log(resp.data);
     }
     catch (err) {
@@ -43,12 +43,12 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubForm)} className='col-md-6 p-3 shadow mx-auto'>
         <label>Email:</label>
         <input {...emailRef} type="text" className='form-control' />
-        {errors.email && <div className="text-danger">Enter valid email</div>}
+        {errors.email && <div className="text-danger">Enter a valid email</div>}
 
         <label>Password:</label>
         <input {...passwordRef} type="text" className='form-control' />
-        {errors.password && <div className="text-danger">Enter min 3 charts password</div>}
-        <button className='btn btn-dark mt-3'>Log in to system</button>
+        {errors.password && <div className="text-danger">Enter at least 3 chars for password</div>}
+        <button className='btn btn-dark mt-3'>Log in</button>
       </form>
     </div>
   )

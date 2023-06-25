@@ -1,10 +1,10 @@
 import './App.css';
-import LandingPage from './general_comps/landingPage';
+import ConfigRoutes from './general_comps/configRoutes';
 
 function App() {
   return (
     <div className="App">
-      <LandingPage/>
+      <ConfigRoutes/>
     </div>
   );
 }

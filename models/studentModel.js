@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
 
 let studentSchema = new mongoose.Schema({
+  user_id:String,
   status: { type: String, default: "un-active" },
   subjects_array: {
     traffic_signs: Number,
