@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
 
 let studentSchema = new mongoose.Schema({
+
   user_id: String,
-  status: {type: String, default: "no_active"},
+  status: { type: String, default: "un-active" },
   subjects_array: {
     traffic_signs: {type: Number, default: 0},
     turns: {type: Number, default: 0},
@@ -27,7 +28,7 @@ exports.createToken = (user_id, user_role) => {
 exports.studentValid = (_reqBody) => {
   let joiSchema = Joi.object({
     user_id: Joi.string().min(2).max(50).required(),
-    status: Joi.string().min(2).max(15),
+    status: Joi.object({ status: Joi.string().min(2).max(15) }).required(),
     subjects_array: Joi.object({
       traffic_signs: Joi.number().min(0).max(100),
       turns: Joi.number().min(0).max(100),
@@ -35,8 +36,8 @@ exports.studentValid = (_reqBody) => {
       vehicle_operation: Joi.number().min(0).max(100),
       internal_way: Joi.number().min(0).max(100),
       rights: Joi.number().min(0).max(100)
-    }),
-    teacher_id: Joi.string().min(2).max(99),
+    }).required(),
+    teacher_id: Joi.string().min(2).max(99).allow(null, ""),
     number_of_lessons: Joi.number().min(0).max(250).allow(null, ""),
     debt: Joi.number().min(0).max(250).allow(null, ""),
   });

@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     let validBody = loginValid(req.body);
     if (validBody.error) {
-        return res.status(400).json(validBody.error.details);
+        return res.status(400).json(validBody.error.details,"here!");
     }
     try {
         let user = await UserModel.findOne({ email: req.body.email })

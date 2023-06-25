@@ -6,9 +6,17 @@ const router = express.Router();
 
 // get all students of teacher
 router.get("/", auth, async (req, res) => {
+    let perPage = req.query.perPage || 15;
+    let page = req.query.page || 1;
+    let sort = req.query.sort || "_id";
+    let reverse = req.query.reverse == "yes" ? 1 : -1;
     try {
         let data = await StudentModel.find({ teacher_id: req.tokenData._id }, { password: 0 })
-            .limit(10)
+            .limit(perPage)
+            .skip((page - 1) * perPage)
+            .sort({ [sort]: reverse })
+        res.json(data);
+
         res.json(data);
     }
     catch (err) {
@@ -59,6 +67,18 @@ router.get("/myInfo/:id", authAdmin, async (req, res) => {
     }
 });
 
+// Display student of teacher
+router.get("/myStudents", auth, async (req, res) => {
+    try {
+        let data = await StudentModel.find({ teacherId: req.tokenData._id }, req.body).limit(20);
+        res.json({ data });
+    }
+    catch (err) {
+        // Handle the error
+        console.log(err);
+        res.status(500).json({ msg: 'Internal server error', err });
+    }
+});
 //get more details such as debt etc..
 router.get("/moreDetails/:studentId", auth, async (req, res) => {
     try {
