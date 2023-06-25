@@ -21,13 +21,12 @@ export default function Login() {
   const doApi = async (_dataBody) => {
     try {
       const url = API_URL + '/users/login';
-      const  data  = await doApiMethodSignUpLogin(url, "POST", _dataBody);
-      console.log(data.email);
+      const  {data}  = await doApiMethodSignUpLogin(url, "POST", _dataBody);
       console.log(data);
 
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
-
+        nav()
       }
     }
     catch (err) {
