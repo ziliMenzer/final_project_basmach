@@ -8,7 +8,7 @@ let eventSchema = new mongoose.Schema({
     id_student: Number,
     id_teacher: String,
     type_of_event: String,
-    length_evevt: Number,
+    length_event: Number,
     date: Date,
     subject: String
 });
@@ -23,7 +23,7 @@ exports.eventValid = (_reqBody) => {
         id_student: Joi.string().min(2).max(15).required(),
         id_teacher: Joi.string().min(2).max(15).required(),
         type_of_event: Joi.string().min(2).max(99).required(),
-        length_evevt:Joi.number().min(0).max(2000).allow(null,""),
+        length_event:Joi.number().min(0).max(2000).allow(null,""),
         date: Joi.date().required(),
         subject: Joi.number().min(0).max(250).allow(null, ""),
     });

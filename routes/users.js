@@ -65,7 +65,7 @@ router.delete("/:idDel", auth, async (req, res) => {
             data = await UserModel.deleteOne({ _id: delId }, req.body);
         }
         else {
-            data = await UserModel.deleteOne({ _id: delId, userId: req.tokenData._id }, req.body);
+            data = await UserModel.deleteOne({ _id: delId, _id: req.tokenData._id }, req.body);
         }
         res.json(data);
     }
