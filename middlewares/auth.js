@@ -15,6 +15,7 @@ exports.auth = async (req, res, next) => {
     return res.status(401).json({ msg: "Token is not valid or expired"});
   }
 }
+
 exports.authAdmin = (req, res) => {
   let token = req.header("x-api-key");
   if (!token) {
