@@ -81,3 +81,5 @@ router.post("/addEvent", async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
+
+module.exports = router;

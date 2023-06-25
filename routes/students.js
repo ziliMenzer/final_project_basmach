@@ -16,10 +16,29 @@ router.get("/", auth, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
+
+// register student
+router.post("/", async (req, res) => {
+    let valdiateBody = studentValid(req.body);
+    if (valdiateBody.error) {
+      return res.status(400).json(valdiateBody.error.details)
+    }
+    try {
+      let student = new StudentModel(req.body);
+      await student.save();
+      res.status(201).json(student)
+    }
+    catch (err) {
+      console.log(err)
+      res.status(500).json({ msg: "err", err })
+    }
+  })
+
+
 //get student info
 router.get("/myInfo", auth, async (req, res) => {
     try {
-        let studentInfo = await StudentModel.findOne({ _id: req.tokenData._id }, { password: 0 });
+        let studentInfo = await StudentModel.findOne({ user_id: req.tokenData._id }, { password: 0 });
         res.json(studentInfo);
     }
     catch (err) {
@@ -39,6 +58,7 @@ router.get("/myInfo/:id", authAdmin, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
+
 //get more details such as debt etc..
 router.get("/moreDetails/:studentId", auth, async (req, res) => {
     try {
@@ -75,7 +95,7 @@ router.put("/:idEdit", auth, async (req, res) => {
             data = await StudentModel.updateOne({ _id: editId }, req.body);
         }
         else {
-            data = await StudentModel.updateOne({ _id: editId, teacher_id: req.tokenData._id }, req.body);
+            data = await StudentModel.updateOne({ _id: editId}, req.body);
         }
         res.json(data);
     }
@@ -118,7 +138,7 @@ router.delete("/:idDel", auth, async (req, res) => {
             data = await StudentModel.deleteOne({ _id: delId }, req.body);
         }
         else {
-            data = await StudentModel.deleteOne({ _id: delId, userId: req.tokenData._id }, req.body);
+            data = await StudentModel.deleteOne({ _id: delId, user_id: req.tokenData._id }, req.body);
         }
         res.json(data);
     }
