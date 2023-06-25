@@ -8,7 +8,7 @@ import "./login.css";
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // const nav = useNavigate();
+  const nav = useNavigate();
 
   const onSubForm = (bodyData) => {
     console.log(bodyData);
@@ -20,7 +20,7 @@ export default function Login() {
     try {
       let resp = await doApiMethod(url,"POST",bodyData);
         localStorage.setItem(TOKEN_NAME,resp.data.token);
-        // nav("/admin/users");
+        nav("/admin/users");
         console.log(resp.data);
     }
     catch (err) {
