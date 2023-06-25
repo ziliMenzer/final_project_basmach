@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
 
 let studentSchema = new mongoose.Schema({
-  status: String,
+  status: { type: String, default: "un-active" },
   subjects_array: {
     traffic_signs: Number,
     turns: Number,
@@ -17,7 +17,7 @@ let studentSchema = new mongoose.Schema({
   number_of_lessons: Number,
   debt: Number
 });
-exports.studentModel = mongoose.model("students", studentSchema);
+exports.StudentModel = mongoose.model("students", studentSchema);
 exports.createToken = (user_id, user_role) => {
   let token = jwt.sign({ _id: user_id, role: user_role }, config.tokenSecret, { expiresIn: "60mins" });
   return token;
@@ -25,7 +25,7 @@ exports.createToken = (user_id, user_role) => {
 
 exports.studentValid = (_reqBody) => {
   let joiSchema = Joi.object({
-    status: Joi.string().min(2).max(15).required(),
+    status: Joi.object({ status: Joi.string().min(2).max(15) }).required(),
     subjects_array: Joi.object({
       traffic_signs: Joi.number().min(0).max(100),
       turns: Joi.number().min(0).max(100),
@@ -34,7 +34,7 @@ exports.studentValid = (_reqBody) => {
       internal_way: Joi.number().min(0).max(100),
       rights: Joi.number().min(0).max(100)
     }).required(),
-    teacher_id: Joi.string().min(2).max(99).required(),
+    teacher_id: Joi.string().min(2).max(99).allow(null, ""),
     number_of_lessons: Joi.number().min(0).max(250).allow(null, ""),
     debt: Joi.number().min(0).max(250).allow(null, ""),
   });
