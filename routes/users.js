@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     let validBody = loginValid(req.body);
     if (validBody.error) {
-        return res.status(400).json(validBody.error.details,"here!");
+        return res.status(400).json(validBody.error.details, "here!");
     }
     try {
         let user = await UserModel.findOne({ email: req.body.email })
@@ -49,7 +49,9 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ msg: "Password or email is worng ,code:2" });
         }
         let token = createToken(user._id, user.role);
-        res.json({ token });
+        let role =user.role;
+        let teacher_id = user.teacher_id;
+        res.json({ token ,role,teacher_id});
     }
     catch (err) {
         console.log(err)
@@ -96,5 +98,15 @@ router.put("/:idEdit", auth, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
-
+router.get("/checkRole:user_id", async (req, res) => {
+    let user_id = req.params.user_id;
+    try {
+        let role = await UserModel.findOne({ _id: user_id }, req.body);
+        res.json({ role });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: "err", err });
+    }
+});
 module.exports = router;

@@ -16,7 +16,7 @@ let userSchema = new mongoose.Schema({
     type: Date, default: Date.now()
   },
   role: {
-    type: String, default: "user"
+    type: String, default: "student"
   },
 });
 exports.UserModel = mongoose.model("users", userSchema);

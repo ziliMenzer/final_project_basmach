@@ -24,7 +24,22 @@ router.get("/", auth, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
+router.get("/:id", auth, async (req, res) => {
+    let studentId = req.params.id;
+    try {
+        let data = await StudentModel.find({ user_id:studentId})
+            .limit(perPage)
+            .skip((page - 1) * perPage)
+            .sort({ [sort]: reverse })
+        res.json(data);
 
+        res.json(data);
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ msg: "err", err })
+    }
+});
 // register student
 router.post("/", async (req, res) => {
     let valdiateBody = studentValid(req.body);
