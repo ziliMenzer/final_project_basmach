@@ -49,9 +49,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ msg: "Password or email is worng ,code:2" });
         }
         let token = createToken(user._id, user.role);
-        let role =user.role;
-        let teacher_id = user.teacher_id;
-        res.json({ token ,role,teacher_id});
+        res.json({ token});
     }
     catch (err) {
         console.log(err)

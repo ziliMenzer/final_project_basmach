@@ -2,6 +2,7 @@ const express = require("express");
 const { StudentModel, studentValid } = require("../models/studentModel");
 const { auth, authAdmin } = require("../middlewares/auth");
 const { error } = require("console");
+const { UserModel } = require("../models/userModel");
 const router = express.Router();
 
 // get all students of teacher
@@ -24,51 +25,48 @@ router.get("/", auth, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
-router.get("/:id", auth, async (req, res) => {
-    let studentId = req.params.id;
+//get all student info by id
+router.get("/studentInfo", auth, async (req, res) => {
     try {
-        let data = await StudentModel.find({ user_id:studentId})
-            .limit(perPage)
-            .skip((page - 1) * perPage)
-            .sort({ [sort]: reverse })
-        res.json(data);
-
-        res.json(data);
+      let userData = await UserModel.findOne({ _id: req.tokenData._id });
+      let studentData = await StudentModel.findOne({ user_id: req.tokenData._id });
+      
+      const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
+      res.json(fullStudent);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ msg: "Error", err });
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({ msg: "err", err })
-    }
-});
+  });
 // register student
 router.post("/", async (req, res) => {
     let valdiateBody = studentValid(req.body);
     if (valdiateBody.error) {
-      return res.status(400).json(valdiateBody.error.details)
+        return res.status(400).json(valdiateBody.error.details)
     }
     try {
-      let student = new StudentModel(req.body);
-      await student.save();
-      res.status(201).json(student)
-    }
-    catch (err) {
-      console.log(err)
-      res.status(500).json({ msg: "err", err })
-    }
-  })
-
-
-//get student info
-router.get("/myInfo", auth, async (req, res) => {
-    try {
-        let studentInfo = await StudentModel.findOne({ user_id: req.tokenData._id }, { password: 0 });
-        res.json(studentInfo);
+        let student = new StudentModel(req.body);
+        await student.save();
+        res.status(201).json(student)
     }
     catch (err) {
         console.log(err)
         res.status(500).json({ msg: "err", err })
     }
-});
+})
+
+
+//get student info
+// router.get("/myInfo", auth, async (req, res) => {
+//     try {
+//         let studentInfo = await StudentModel.findOne({ user_id: req.tokenData._id }, { password: 0 });
+//         res.json(studentInfo);
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500).json({ msg: "err", err })
+//     }
+// });
 //get student info by admin
 router.get("/myInfo/:id", authAdmin, async (req, res) => {
     let studentId = req.params.id;
@@ -130,7 +128,7 @@ router.put("/:idEdit", auth, async (req, res) => {
             data = await StudentModel.updateOne({ _id: editId }, req.body);
         }
         else {
-            data = await StudentModel.updateOne({ _id: editId}, req.body);
+            data = await StudentModel.updateOne({ _id: editId }, req.body);
         }
         res.json(data);
     }

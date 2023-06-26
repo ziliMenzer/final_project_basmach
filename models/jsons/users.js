@@ -1,11 +1,11 @@
 [{
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "johndoe@example.com",
-    "phone": "1234567890",
-    "password": "P@ssw0rd",
-    "address": "123 Main Street, City, Country",
-    "profile_image": "http://example.com/profile.jpg",
+    "first_name": "אדם",
+    "last_name": "כהן",
+    "email": "adam@example.com",
+    "phone": "052-1112233",
+    "password": "p@ssw0rd!",
+    "address": "רחוב הראשון 1, תל אביב",
+    "profile_image": "https://example.com/profile_image_adam.jpg",
     "role": "student"
 },
 {

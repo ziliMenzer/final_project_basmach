@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { ThreeDots } from 'react-loader-spinner'
-import { doApiMethodSignUpLogin, API_URL, TOKEN_NAME } from '../services/apiService';
+import jwt_decode from 'jwt-decode';
+import { doApiMethodSignUpLogin, doApiTokenGet, API_URL, TOKEN_NAME } from '../services/apiService';
 import "./login.css";
 
 export default function Login() {
@@ -23,24 +24,29 @@ export default function Login() {
       const url = API_URL + '/users/login';
       const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
       console.log(data);
-     
+
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
-        console.log(data.role, "role");
-
-        if (data.role === "teacher") {
+        const decodedToken = jwt_decode(data.token);
+        const userRole = decodedToken.role;
+        console.log(userRole)
+        if (userRole === "teacher") {
           nav("/allStudents");
         }
-        else if (data.role === "student") {
-          
-          if (data.teacher_id === "null") {
+        else if (userRole === "student") {
+          const student_url = API_URL + '/students/studentInfo'
+          const fullStudent = await doApiTokenGet(student_url, "GET", data.token);
+          console.log(fullStudent);
+          let teacher_id = fullStudent.data.teacher_id;
+
+          if (teacher_id === "null") {
             nav("/allTeachersList");
           }
           else {
             nav("/studentHome")
           }
         }
-        else if(data.role === "user"){
+        else if (userRole === "user") {
           console.log("zili");
           nav("/allTeachersList");
         }
