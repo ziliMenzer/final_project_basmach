@@ -37,7 +37,7 @@ export default function Login() {
             nav("/allTeachersList");
           }
           else {
-            nav("/progress")
+            nav("/studentHome")
           }
         }
         else if(data.role === "user"){
