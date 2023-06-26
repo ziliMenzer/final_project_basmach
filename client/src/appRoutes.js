@@ -11,22 +11,22 @@ export default function AppRoutes() {
         <BrowserRouter>
 
             <AppContext.Provider value={{
-                
+                user,setUser
             }}>
 
                 <header className='p-2 container bg-warning'>
-                    <Link to="/">Home</Link> 
-                    <Link to="/login">login</Link> 
-                    <Link to="/allTeachersList">AllTeachersList</Link> 
-                    <Link to="/pixa/cats">Pixa</Link> 
-                    <Link to="/cars">Cars</Link> 
+                    <Link to="/">Home</Link>
+                    <Link to="/login">login</Link>
+                    <Link to="/allTeachersList">AllTeachersList</Link>
+                    <Link to="/pixa/cats">Pixa</Link>
+                    <Link to="/cars">Cars</Link>
                     <Link to="/casino">Casino</Link>
                 </header>
                 {/* outlet */}
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path='allTeachersList' element={<AllTeachersList/>}/>
+                    <Route path='allTeachersList' element={<AllTeachersList />} />
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />

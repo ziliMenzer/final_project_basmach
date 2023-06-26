@@ -2,10 +2,20 @@ import React from 'react'
 
 export default function TeacherItem(props) {
     let item = props.item;
+    const addStudent=()=>{
+
+    }
   return (
-    <div className='col-md-4'>
-        <h2>license_type: {item.license_type}</h2>
-        <h2>rating {item.rating}</h2>
+    <div className='col-md-4 bg-light'>
+        <h2>name: {item.first_name} {item.last_name}</h2>
+        <h2>license type: {item.license_type}</h2>
+        <h2>rating: {item.rating}</h2>
+        <button onClick={()=>{
+            <div className='col-md-4 bg-light'>האם את/ה בטוח/ה שתרצה ללמוד אצל: {item.first_name} {item.last_name}
+            <button onClick={addStudent}>אישור</button>
+            </div>
+            
+        }}>בחירת מורה</button>
     </div>
   )
 }
