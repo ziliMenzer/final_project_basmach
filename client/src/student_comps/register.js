@@ -5,13 +5,13 @@ import { ThreeDots } from 'react-loader-spinner'
 import { useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { API_URL, doApiMethodSignUpLogin } from '../services/servise';
-import InputEmailLinked from '../ui/inputs/inputEmailLinked';
-import InputFirstName from '../ui/inputs/inputFirstName';
+ import InputFirstName from '../ui/inputs/inputFirstName';
 import InputLastName from '../ui/inputs/inputLastName';
-import InputPhoneLinked from '../ui/inputs/inputPhoneLinked';
 // import InputPinCode from '../ui/inputs/groupLinked/inputPinCode';
 import InputPasswordLinked from '../ui/inputs/inputPasswordLinked';
 // import InputConfirmPassword from '../ui/inputs/inputConfirmPassword';
+import InputEmailLinked from '../ui/inputs/inputEmailLinked';
+import InputPhoneLinked from '../ui/inputs/inputPhoneLinked';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
