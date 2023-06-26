@@ -17,7 +17,7 @@ export const doApiGet = async (_url) => {
     throw err;
   }
 }
-export const doApiTukenGet = async (_url) => {
+export const doApiTokenGet = async (_url) => {
   try {
     let resp = await axios.get(_url, {
       headers: {

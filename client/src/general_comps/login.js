@@ -21,12 +21,29 @@ export default function Login() {
   const doApi = async (_dataBody) => {
     try {
       const url = API_URL + '/users/login';
-      const {data}  = await doApiMethodSignUpLogin(url, "POST", _dataBody);
+      const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
       console.log(data);
-
+     
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
-        alert("login success");
+        console.log(data.role, "role");
+
+        if (data.role === "teacher") {
+          nav("/allStudents");
+        }
+        else if (data.role === "student") {
+          
+          if (data.teacher_id === "null") {
+            nav("/allTeachersList");
+          }
+          else {
+            nav("/progress")
+          }
+        }
+        else if(data.role === "user"){
+          console.log("zili");
+          nav("/allTeachersList");
+        }
       }
     }
     catch (err) {
