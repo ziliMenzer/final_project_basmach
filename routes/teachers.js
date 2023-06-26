@@ -1,13 +1,6 @@
 const express = require("express");
-
-const router = express.Router();
-router.get("/", async (req, res) => {
-  res.json({ msg: "Rest api work" })
-});
-const { authToken, authAdmin } = require("../middleware/auth");
+const { auth, authAdmin } = require("../middlewares/auth");
 const { TeacherModel, teacherValid } = require("../models/teacherModel");
-const { StudentModel } = require("../models/studentModel")
-const { auth } = require("../middlewares/auth");
 const router = express.Router();
 
 // Display all teachers
