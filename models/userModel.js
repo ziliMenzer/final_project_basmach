@@ -2,21 +2,21 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
-const pattern = "/(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!#.])[A-Za-zd$@$!%*?&.]{8,20}/";
+// const pattern = "/(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!#.])[A-Za-zd$@$!%*?&.]{8,20}/";
 let userSchema = new mongoose.Schema({
   id: Number,
   first_name: String,
   last_name: String,
   email: String,
   phone: String,
-  address: String,
   password: String,
+  address: String,
   profile_image: String,
   date_created: {
     type: Date, default: Date.now()
   },
   role: {
-    type: String, default: "user"
+    type: String, default: "student"
   },
 });
 exports.UserModel = mongoose.model("users", userSchema);
@@ -33,7 +33,6 @@ exports.userValid = (_reqBody) => {
     phone: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
     address: Joi.string().min(5).max(100).required(),
     password: Joi.string()
-      .regex(RegExp(pattern))
       .required()
       .min(8)
       .max(20),
@@ -48,7 +47,6 @@ exports.loginValid = (_reqBody) => {
   let joiSchema = Joi.object({
     email: Joi.string().min(2).max(99).email().required(),
     password: Joi.string()
-    .regex(RegExp(pattern))
     .required()
     .min(8)
     .max(20)

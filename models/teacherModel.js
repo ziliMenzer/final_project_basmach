@@ -5,12 +5,14 @@ const { config } = require("../config/secret")
 let teacherSchema = new mongoose.Schema({
     user_id: String,
     license_type: String,
-    rating: Number,
+    rating: {
+        type: Number, default: 0
+    },
     payment_per_lesson: Number,
     sex: String,
     numberOfRaters: {
-        type: Number, default:0
-      }
+        type: Number, default: 0
+    }
     // bank_acoount_number: Number
 });
 exports.TeacherModel = mongoose.model("teachers", teacherSchema);
@@ -23,9 +25,9 @@ exports.teacherValid = (_reqBody) => {
     let joiSchema = Joi.object({
         user_id: Joi.string().min(2).max(99).required(),
         license_type: Joi.string().min(2).max(99).email().required(),
-        rating: Joi.string().min(2).max(99).allow(null,""),
+        rating: Joi.string().min(2).max(99).allow(null, ""),
         payment_per_lesson: Joi.number().min(100).max(300).required(),
-        sex: Joi.string().min(3).max(10).allow(null,"")
+        sex: Joi.string().min(3).max(10).allow(null, "")
     });
     return joiSchema.validate(_reqBody);
 }
