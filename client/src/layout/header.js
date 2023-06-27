@@ -15,7 +15,7 @@ export default function Header() {
                         <Link to="/">Home</Link>
                        <Link to="/login">login</Link>
                         <Link to="/allTeachersList">AllTeachersList</Link>
-                        <Link to="/something">pw</Link>
+                        <Link to="/calendar">calendar</Link>
                         <Link to="/logout">logout</Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

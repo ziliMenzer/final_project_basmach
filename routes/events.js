@@ -1,85 +1,130 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const { auth } = require("../middlewares/auth");
-const { eventModel } = require("../models/eventModel");
+const { EventModel, eventValid } = require("../models/eventModel");
 const router = express.Router();
 
-
 router.get("/", auth, async (req, res) => {
-    try {
-        let data;
-        if (req.tokenData.role == "admin") {
-            data = await eventModel.find({}, req.body);
-        }
-        else {
-            try {
-                if (req.tokenData.role == "teacher") {
-                    data = await eventModel.findOne({ id_teacher: req.tokenData._id }, req.body);
-                }
-                else {
-                    data = await eventModel.findOne({ id_student: req.tokenData._id }, req.body);
-                }
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-        res.json(data);
+  let data;
+  try {
+    if (req.tokenData.role == "student") {
+      data = await EventModel.find({ student_id: req.tokenData._id });
     }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({ msg: "there error try again later", err })
+    else if (req.tokenData.role == "teacher") {
+      data = await EventModel.find({ teacher_id: req.tokenData._id });
     }
+    else {
+      res.status(501).json({ msg: "you need token" });
+    }
+    // data = await EventModel.find({});
+    res.json(data);
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
 });
+// router.get("/", auth, async (req, res) => {
+//     try {
+//         let data;
+//         if (req.tokenData.role == "admin") {
+//             data = await EventModel.find({}, req.body);
+//         }
+//         else {
+//             try {
+//                 if (req.tokenData.role == "teacher") {
+//                     data = await EventModel.find({ teacher_id: req.tokenData._id }, req.body);
+//                 }
+//                 else {
+//                     data = await EventModel.find({ student_id: req.tokenData._id }, req.body);
+//                 }
+//             }
+//             catch (err) {
+//                 console.log(err);
+//             }
+//         }
+//         res.json(data);
+//     }
+//     catch (err) {
+//         console.log(err);
+//         res.status(500).json({ msg: "there error try again later", err })
+//     }
+// });
 
 router.get("/eventInfo/:id", auth, async (req, res) => {
-    try {
-        let data;
-        if (req.tokenData.role == "admin") {
-            data = await eventModel.findOne({_id:id}, req.body);
+  try {
+    let data;
+    if (req.tokenData.role == "admin") {
+      data = await EventModel.findOne({ _id: id }, req.body);
+    }
+    else {
+      try {
+        if (req.tokenData.role == "teacher") {
+          data = await EventModel.findOne({ teacher_id: req.tokenData._id, _id: id }, req.body);
         }
         else {
-            try {
-                if (req.tokenData.role == "teacher") {
-                    data = await eventModel.findOne({ id_teacher: req.tokenData._id, _id: id }, req.body);
-                }
-                else {
-                    data = await eventModel.findOne({ id_student: req.tokenData._id, _id: id }, req.body);
-                }
-            }
-            catch (err) {
-                console.log(err);
-            }
+          data = await EventModel.findOne({ student_id: req.tokenData._id, _id: id }, req.body);
         }
-        res.json(data);
-    }
-    catch (err) {
+      }
+      catch (err) {
         console.log(err);
-        res.status(500).json({ msg: "there error try again later", err })
+      }
     }
+    res.json(data);
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "there error try again later", err })
+  }
 });
 
-router.post("/addEvent", async (req, res) => {
-    let validateBody = eventValid(req.body);
-    if (validateBody.error) {
-        return res.status(400).json(validateBody.error.details)
+router.post("/", auth, async (req, res) => {
+  let validateBody = eventValid(req.body);
+  if (validateBody.error) {
+    return res.status(400).json(validateBody.error.details)
+  }
+  try {
+    if (req.tokenData.role == "teacher" || req.tokenData.role == "admin") {
+      let event = new EventModel(req.body);
+      res.status(201).json(event);
     }
-    try {
-        let user = new UserModel(req.body);
-        user.password = await bcrypt.hash(user.password, 10)
-        await user.save();
-        user.password = "******";
-        res.status(201).json(user)
+    else {
+      res.status(500).json({ msg: "you nead to be a teacher to access this endpoint" });
     }
-    catch (err) {
-        // בודק אם השגיאה זה אימייל שקיים כבר במערכת
-        // דורש בקומפס להוסיף אינדקס יוניקי
-        if (err.code == 11000) {
-          return res.status(400).json({ msg: "Email already in system try login", code: 11000 })
-        }
-        console.log(err)
-        res.status(500).json({ msg: "err", err })
-    }
+  }
+  catch (err) {
+    console.log(err)
+    res.status(500).json({ msg: "err", err })
+  }
 });
-
+router.put("/:idEdit", auth, async (req, res) => {
+  let validBody = eventValid(req.body);
+  if (validBody.error) {
+    return res.status(400).json(validBody.error.details);
+  }
+  try {
+    let editId = req.params.idEdit;
+    let data;
+    if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
+      data = await EventModel.updateOne({ _id: editId }, req.body);
+    }
+    res.json(data);
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "err", err })
+  }
+});
+router.delete("/:idDel", auth, async (req, res) => {
+  try {
+    let delId = req.params.idDel;
+    if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
+      let data = await EventModel.deleteOne({ _id: delId }, req.body);
+      res.json(data);
+    }
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "there is an error, try again later", err })
+  }
+});
 module.exports = router;

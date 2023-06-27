@@ -6,6 +6,8 @@ import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
 import Header from './layout/header'
 import Logout from './general_comps/logout'
+import Calendar from './events_comps/calendar'
+import AddEvent from './events_comps/addEvent'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({})
@@ -30,7 +32,9 @@ export default function AppRoutes() {
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/logout" element={<Logout />} />
+                    <Route path="/calendar" element={<Calendar />} />
                     <Route path='allTeachersList' element={<AllTeachersList />} />
+                    <Route path='addEvent' element={<AddEvent />} />
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />
