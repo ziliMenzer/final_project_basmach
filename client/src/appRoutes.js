@@ -11,9 +11,7 @@ export default function AppRoutes() {
     return (
         <BrowserRouter>
 
-            <AppContext.Provider value={{
-                
-            }}>
+            <AppContext.Provider value={{}}>
 
                 <header className='p-2 container-fluid bg-warning'>
                     <Link to="/">Home</Link> 
