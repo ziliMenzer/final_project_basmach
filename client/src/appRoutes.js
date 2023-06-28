@@ -5,27 +5,33 @@ import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
 import StudentHome from './student_comps/studentHome'
+import Header from './layout/header'
+import Logout from './general_comps/logout'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({})
     return (
         <BrowserRouter>
 
-            <AppContext.Provider value={{}}>
+            <AppContext.Provider value={{
+                user,setUser
+            }}>
+                <Header/>
 
-                <header className='p-2 container-fluid bg-warning'>
-                    <Link to="/">Home</Link> 
-                    <Link to="/login">login</Link> 
-                    <Link to="/allTeachersList">AllTeachersList</Link> 
-                    <Link to="/pixa/cats">Pixa</Link> 
-                    <Link to="/cars">Cars</Link> 
+                {/* <header className='p-2 container bg-warning'>
+                    <Link to="/">Home</Link>
+                    <Link to="/login">login</Link>
+                    <Link to="/allTeachersList">AllTeachersList</Link>
+                    <Link to="/pixa/cats">Pixa</Link>
+                    <Link to="/cars">Cars</Link>
                     <Link to="/casino">Casino</Link>
-                </header>
+                </header> */}
                 {/* outlet */}
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path='allTeachersList' element={<AllTeachersList/>}/>
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path='allTeachersList' element={<AllTeachersList />} />
                     <Route path='studentHome' element={<StudentHome/>}/>
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />

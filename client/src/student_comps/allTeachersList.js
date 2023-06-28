@@ -7,16 +7,20 @@ export default function AllTeachersList() {
     useEffect(() => {
         doApi()
     }, []);
+
     const doApi = async () => {
         try {
-            const url = API_URL + '/teachers/';
-            const { data } = await doApiGet(url);
-            console.log(data);
-            setTeachersList(data);
+            let url = API_URL + '/teachers/';
+            const {data}  = await doApiGet(url);
+            data.map(async item=>{
+                url = API_URL + `/teachers/teacherInfo/${item.user_id}`;
+                let teacher = await doApiGet(url);
+                setTeachersList(teachersList=>[...teachersList,teacher.data])
+            });
         }
         catch (err) {
             console.log(err)
-         }
+         }    
     }
     return (
         <div className='container'>

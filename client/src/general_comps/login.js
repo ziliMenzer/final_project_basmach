@@ -1,14 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { ThreeDots } from 'react-loader-spinner'
 import jwt_decode from 'jwt-decode';
-import { doApiMethodSignUpLogin, doApiTokenGet, API_URL, TOKEN_NAME } from '../services/apiService';
+import { doApiMethodSignUpLogin, doApiGet, doApiTokenGet, API_URL, TOKEN_NAME } from '../services/apiService';
 import "./login.css";
-
+import { AppContext } from "../context/userProvider"
 export default function Login() {
+  const { user, setUser } = useContext(AppContext);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -18,10 +19,13 @@ export default function Login() {
     console.log(bodyData);
     doApi(bodyData);
   }
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user])
 
   const doApi = async (_dataBody) => {
     try {
-      const url = API_URL + '/users/login';
+      let url = API_URL + '/users/login';
       const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
       console.log(data);
 
@@ -31,14 +35,19 @@ export default function Login() {
         const userRole = decodedToken.role;
         console.log(userRole)
         if (userRole === "teacher") {
+          let url = API_URL + `/teachers/teacherInfo/${data.token._id}`;
+          let teacher = await doApiGet(url);
+          console.log("teacher", teacher.data);
+          setUser(teacher.data);
           nav("/allStudents");
         }
         else if (userRole === "student") {
           const student_url = API_URL + '/students/studentInfo'
           const fullStudent = await doApiTokenGet(student_url, "GET", data.token);
-          console.log(fullStudent);
+          console.log(fullStudent.data);
           let teacher_id = fullStudent.data.teacher_id;
-
+          console.log("student", fullStudent.data);
+          setUser(fullStudent.data);
           if (teacher_id === "null") {
             nav("/allTeachersList");
           }
@@ -46,9 +55,8 @@ export default function Login() {
             nav("/studentHome")
           }
         }
-        else if (userRole === "user") {
-          console.log("zili");
-          nav("/allTeachersList");
+        else if (userRole === "admin") {
+          nav("/userList");
         }
       }
     }

@@ -25,7 +25,7 @@ router.get("/", auth, async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
-//get all student info by id
+//get all of student info
 router.get("/studentInfo", auth, async (req, res) => {
     try {
       let userData = await UserModel.findOne({ _id: req.tokenData._id });
