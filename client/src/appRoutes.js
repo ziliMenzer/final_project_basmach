@@ -7,14 +7,19 @@ import AllTeachersList from './student_comps/allTeachersList'
 import StudentHome from './student_comps/studentHome'
 import Header from './layout/header'
 import Logout from './general_comps/logout'
+import Footer from './layout/footer'
 
 export default function AppRoutes() {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
+    const updateUserDetails = (updatedDetails) => {
+        setUser((prevUser) => ({ ...prevUser, ...updatedDetails }));
+      };
     return (
         <BrowserRouter>
 
             <AppContext.Provider value={{
-                user,setUser
+                user,setUser,
+                updateUserDetails
             }}>
                 <Header/>
 
@@ -39,7 +44,7 @@ export default function AppRoutes() {
                     <Route path="/cars" element={<CarsList />} /> */}
                 </Routes>
                 {/* outlet */}
-                <footer className='p-2 container-fluid bg-danger'>footer</footer>
+                    <Footer></Footer>
             </AppContext.Provider>
         </BrowserRouter>
     )
