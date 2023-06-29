@@ -12,12 +12,10 @@ router.get("/", auth, async (req, res) => {
     let sort = req.query.sort || "_id";
     let reverse = req.query.reverse == "yes" ? 1 : -1;
     try {
-        let data = await StudentModel.find({ teacher_id: req.tokenData._id }, { password: 0 })
+        let data = await StudentModel.find({ teacher_id: req.tokenData._id })
             .limit(perPage)
             .skip((page - 1) * perPage)
             .sort({ [sort]: reverse })
-        res.json(data);
-
         res.json(data);
     }
     catch (err) {
@@ -28,16 +26,16 @@ router.get("/", auth, async (req, res) => {
 //get all of student info
 router.get("/studentInfo", auth, async (req, res) => {
     try {
-      let userData = await UserModel.findOne({ _id: req.tokenData._id });
-      let studentData = await StudentModel.findOne({ user_id: req.tokenData._id });
-      
-      const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
-      res.json(fullStudent);
+        let userData = await UserModel.findOne({ _id: req.tokenData._id });
+        let studentData = await StudentModel.findOne({ user_id: req.tokenData._id });
+
+        const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
+        res.json(fullStudent);
     } catch (err) {
-      console.log(err);
-      res.status(500).json({ msg: "Error", err });
+        console.log(err);
+        res.status(500).json({ msg: "Error", err });
     }
-  });
+});
 // register student
 router.post("/", async (req, res) => {
     let valdiateBody = studentValid(req.body);
@@ -68,15 +66,17 @@ router.post("/", async (req, res) => {
 //     }
 // });
 //get student info by admin
-router.get("/myInfo/:id", authAdmin, async (req, res) => {
+router.get("/myInfo/:id", auth, async (req, res) => {
     let studentId = req.params.id;
     try {
-        let studentInfo = await StudentModel.findOne({ _id: studentId }, { password: 0 });
-        res.json(studentInfo);
-    }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({ msg: "err", err })
+        let userData = await UserModel.findOne({ _id: studentId });
+        let studentData = await StudentModel.findOne({ user_id: studentId });
+
+        const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
+        res.json(fullStudent);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: "Error", err });
     }
 });
 
@@ -125,10 +125,10 @@ router.put("/:idEdit", auth, async (req, res) => {
         let editId = req.params.idEdit;
         let data;
         if (req.tokenData.role == "admin") {
-            data = await StudentModel.updateOne({ _id: editId }, req.body);
+            data = await StudentModel.updateOne({ user_id: editId }, req.body);
         }
         else {
-            data = await StudentModel.updateOne({ _id: editId }, req.body);
+            data = await StudentModel.updateOne({ user_id: editId }, req.body);
         }
         res.json(data);
     }

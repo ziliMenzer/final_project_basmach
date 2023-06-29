@@ -1,4 +1,4 @@
-import React, { useState,useContext,useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { AppContext } from '../context/userProvider';
 
@@ -9,15 +9,15 @@ const AddEventModal = ({ onAdd, onClose }) => {
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
 
-  const {user} =useContext(AppContext);
+  const { user, myStudents } = useContext(AppContext);
 
-useEffect(()=>{
-  handleTeacherId();
-},[])
+  useEffect(() => {
+    handleTeacherId();
+  }, []);
 
   const handleTeacherId = () => {
     //setTeacher_id(user._id);
-    setTeacher_id('6498a3d506290ae847849cb4');
+    setTeacher_id(user._id);
   }
 
   const handleTitleChange = (e) => {
@@ -47,7 +47,14 @@ useEffect(()=>{
     onAdd(newEvent);
     onClose();
   };
-
+  const getNameById = (student_id) => {
+      
+  }
+  // const fillSelectBox = () => {
+  //   myStudents.map((item) => {
+  //     return item.first_name+" "+item.last_name;
+  //   });
+  //};
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
@@ -60,9 +67,24 @@ useEffect(()=>{
             <Form.Control type="text" defaultValue={title} onChange={handleTitleChange} />
           </Form.Group>
           <Form.Group controlId="student_id">
+            <Form.Label>Student:</Form.Label>
+            <Form.Select defaultValue={getNameById(student_id)}>
+              {myStudents.map(student => (
+                <option onChange={handleStudentChange} key={student._id}>
+                  {student.first_name} {student.last_name}
+                </option>
+              ))}
+
+              {/* <option>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option> */}
+            </Form.Select>
+          </Form.Group>
+          {/* <Form.Group controlId="student_id">
             <Form.Label>Student Id:</Form.Label>
             <Form.Control type="text" defaultValue={student_id} onChange={handleStudentChange} />
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group controlId="start">
             <Form.Label>Start Time:</Form.Label>
             <Form.Control type="datetime-local" defaultValue={start} onChange={handleStartChange} />

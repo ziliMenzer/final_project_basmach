@@ -36,7 +36,7 @@ exports.studentValid = (_reqBody) => {
       vehicle_operation: Joi.number().min(0).max(100),
       internal_way: Joi.number().min(0).max(100),
       rights: Joi.number().min(0).max(100)
-    }).required(),
+    }),
     teacher_id: Joi.string().min(2).max(99).allow(null, ""),
     number_of_lessons: Joi.number().min(0).max(250).allow(null, ""),
     debt: Joi.number().min(0).max(250).allow(null, ""),

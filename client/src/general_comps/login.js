@@ -27,7 +27,7 @@ export default function Login() {
     try {
       let url = API_URL + '/users/login';
       const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
-      console.log(data);
+      console.log(data.token);
 
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
@@ -35,8 +35,8 @@ export default function Login() {
         const userRole = decodedToken.role;
         console.log(userRole)
         if (userRole === "teacher") {
-          let url = API_URL + `/teachers/teacherInfo/${data.token._id}`;
-          let teacher = await doApiGet(url);
+          let url = API_URL + `/teachers/teacherInfo/`;
+          let teacher = await doApiTokenGet(url);
           console.log("teacher", teacher.data);
           setUser(teacher.data);
           nav("/allStudents");

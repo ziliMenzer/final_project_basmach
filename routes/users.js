@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
         if (!user) {
             return res.status(401).json({ msg: "Password or email is worng ,code:1" })
         }
-        let authPassword = await bcrypt.compare(req.body.password, user.password);
+        let authPassword = bcrypt.compare(req.body.password, user.password);
         if (!authPassword) {
             return res.status(401).json({ msg: "Password or email is worng ,code:2" });
         }
@@ -119,10 +119,10 @@ router.patch("/changeRole/:userID",authAdmin, async(req,res) => {
     try{
       let userID = req.params.userID
       // לא מאפשר ליוזר אדמין להפוך למשהו אחר/ כי הוא הסופר אדמין
-      if(userID == "649d5b98304a954a62f28132"){
-        return res.status(401).json({msg:"You cant change superadmin to user"});
+    //   if(userID == "649d5b98304a954a62f28132"){
+    //     return res.status(401).json({msg:"You cant change superadmin to user"});
     
-      }
+    //   }
       let data = await UserModel.updateOne({_id:userID},{role:req.body.role})
       res.json(data);
     }
@@ -141,10 +141,10 @@ router.patch("/changeRole/:userID",authAdmin, async(req,res) => {
     try{
       let userID = req.params.userID
       // לא מאפשר ליוזר אדמין להפוך למשהו אחר/ כי הוא הסופר אדמין
-      if(userID == "649d5b98304a954a62f28132"){
-        return res.status(401).json({msg:"You cant change superadmin to user"});
+    //   if(userID == "649d5b98304a954a62f28132"){
+    //     return res.status(401).json({msg:"You cant change superadmin to user"});
     
-      }
+    //   }
       let data = await UserModel.updateOne({_id:userID},{active:req.body.active})
       res.json(data);
     }

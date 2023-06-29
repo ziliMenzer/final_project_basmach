@@ -1,5 +1,5 @@
 import React from 'react'
-import { API_URL, doApiMethodToken } from '../services/apiService';
+import { API_URL, doApiMethodTokenNotStringify, doApiMethodToken } from '../services/apiService';
 
 export default function UserItem(props) {
   let item = props.item;
@@ -8,12 +8,12 @@ export default function UserItem(props) {
   const onRoleClick = async () => {
     let bodyData;
     if (item.role == "user") {
-      // if (confirm("האם אתה רוצה להפוך משתמש זה למורה?")==true) {
-      //   bodyData = { role: "teacher" }
-      // }
-      // else {
+      if (window.confirm(`האם אתה רוצה להפוך ${item.first_name}למורה?`)) {
+        bodyData = { role: "teacher" }
+      }
+      else {
         bodyData = { role: "admin" }
-      //}
+      }
     }
     else {
       bodyData = { role: "user" }
@@ -21,7 +21,7 @@ export default function UserItem(props) {
 
     let url = API_URL + "/users/changeRole/" + item._id;
     try {
-      let resp = await doApiMethodToken(url, "PATCH", bodyData)
+      let resp = await doApiMethodTokenNotStringify(url, "PATCH", bodyData)
       console.log(resp.data)
       if (resp.data) {
         props.doApi()
@@ -34,7 +34,7 @@ export default function UserItem(props) {
   }
   const onActiveClick = async () => {
     let bodyData;
-    if (item.active == "true") {
+    if (item.active == true) {
       bodyData = { active: false }
     }
     else {
@@ -43,7 +43,7 @@ export default function UserItem(props) {
 
     let url = API_URL + "/users/changeActive/" + item._id;
     try {
-      let resp = await doApiMethodToken(url, "PATCH", bodyData)
+      let resp = await doApiMethodTokenNotStringify(url, "PATCH", bodyData)
       console.log(resp.data)
       if (resp.data) {
         props.doApi()
@@ -52,6 +52,23 @@ export default function UserItem(props) {
     catch (err) {
       console.log(err.response);
       alert("There is  a problem, or you are trying to change superAdmin to user");
+    }
+  }
+  const onDelClick = async () => {
+    if (window.confirm("Are you sure you want to delete: " + item.first_name)) {
+      try {
+        let url = API_URL + "/users/" + item._id;
+        let resp = await doApiMethodToken(url, "DELETE");
+        console.log(resp.data);
+        if (resp.data.deletedCount == 1) {
+          props.doApi();
+        }
+      }
+      catch (err) {
+        console.log(err.response);
+        alert("There problem , try again later")
+      }
+
     }
   }
   return (
@@ -65,16 +82,14 @@ export default function UserItem(props) {
           {item.role}
         </button>
       </td>
-      <td>{item.rank}</td>
       <td>{item.address}</td>
-      <td>{item.profile_image}</td>
       <td>
         <button onClick={onActiveClick}>
           {String(item.active)}
         </button>
       </td>
       <td>
-        <button className='badge bg-danger'>Delete User</button>
+        <button className='badge bg-danger' onClick={onDelClick}>Delete User</button>
       </td>
     </tr>
   )
