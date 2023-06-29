@@ -28,7 +28,7 @@ exports.createToken = (user_id, user_role) => {
 exports.studentValid = (_reqBody) => {
   let joiSchema = Joi.object({
     user_id: Joi.string().min(2).max(50).required(),
-    status: Joi.object({ status: Joi.string().min(2).max(15) }).required(),
+    status: Joi.object({ status: Joi.string().min(2).max(15) }),
     subjects_array: Joi.object({
       traffic_signs: Joi.number().min(0).max(100),
       turns: Joi.number().min(0).max(100),

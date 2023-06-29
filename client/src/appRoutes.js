@@ -4,10 +4,7 @@ import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
-import Header from './layout/header'
-import Logout from './general_comps/logout'
-import Calendar from './events_comps/calendar'
-import AddEvent from './events_comps/addEvent'
+import StudentHome from './student_comps/studentHome'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({})
@@ -41,7 +38,7 @@ export default function AppRoutes() {
                     <Route path="/cars" element={<CarsList />} /> */}
                 </Routes>
                 {/* outlet */}
-                <footer className='p-2 container bg-danger'>footer</footer>
+                <footer className='p-2 container-fluid bg-danger'>footer</footer>
             </AppContext.Provider>
         </BrowserRouter>
     )
