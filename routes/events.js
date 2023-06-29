@@ -5,24 +5,22 @@ const { EventModel, eventValid } = require("../models/eventModel");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-  let data;
   try {
+    let data;
     if (req.tokenData.role == "student") {
       data = await EventModel.find({ student_id: req.tokenData._id });
-    }
-    else if (req.tokenData.role == "teacher") {
+    } else if (req.tokenData.role == "teacher") {
       data = await EventModel.find({ teacher_id: req.tokenData._id });
+    } else {
+      return res.status(401).json({ msg: "You need a valid token" });
     }
-    else {
-      res.status(501).json({ msg: "you need token" });
-    }
-    // data = await EventModel.find({});
+
     res.json(data);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json(err);
   }
 });
+
 // router.get("/", auth, async (req, res) => {
 //     try {
 //         let data;
@@ -83,20 +81,21 @@ router.post("/", auth, async (req, res) => {
     return res.status(400).json(validateBody.error.details)
   }
   try {
-    if (req.tokenData.role == "teacher" || req.tokenData.role == "admin") {
+    //if (req.tokenData.role == "teacher" || req.tokenData.role == "admin") {
       let event = new EventModel(req.body);
+      await event.save();
       res.status(201).json(event);
-    }
-    else {
-      res.status(500).json({ msg: "you nead to be a teacher to access this endpoint" });
-    }
+    //}
+    //else {
+     // res.status(500).json({ msg: "you nead to be a teacher to access this endpoint" });
+    //}
   }
   catch (err) {
     console.log(err)
     res.status(500).json({ msg: "err", err })
   }
 });
-router.put("/:idEdit", auth, async (req, res) => {
+router.put("/:idEdit", async (req, res) => {
   let validBody = eventValid(req.body);
   if (validBody.error) {
     return res.status(400).json(validBody.error.details);
@@ -104,9 +103,9 @@ router.put("/:idEdit", auth, async (req, res) => {
   try {
     let editId = req.params.idEdit;
     let data;
-    if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
+    //if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
       data = await EventModel.updateOne({ _id: editId }, req.body);
-    }
+    //}
     res.json(data);
   }
   catch (err) {
@@ -114,13 +113,13 @@ router.put("/:idEdit", auth, async (req, res) => {
     res.status(500).json({ msg: "err", err })
   }
 });
-router.delete("/:idDel", auth, async (req, res) => {
+router.delete("/:idDel", async (req, res) => {
   try {
     let delId = req.params.idDel;
-    if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
-      let data = await EventModel.deleteOne({ _id: delId }, req.body);
+    //if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
+      let data = await EventModel.deleteOne({ _id: delId });
       res.json(data);
-    }
+    //}
   }
   catch (err) {
     console.log(err);

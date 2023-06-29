@@ -5,14 +5,21 @@ import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
 import StudentHome from './student_comps/studentHome'
+import Logout from './general_comps/logout'
+import Calendar from './events_comps/calendar'
+import AddEvent from './events_comps/addEvent'
+import Header from './layout/header'
+import UsersList from './admin_comps/userList'
 
 export default function AppRoutes() {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
+    const [myStudents,setMyStudents]=useState([]);
     return (
         <BrowserRouter>
 
             <AppContext.Provider value={{
-                user,setUser
+                user,setUser,
+                myStudents,setMyStudents
             }}>
                 <Header/>
 
@@ -32,6 +39,7 @@ export default function AppRoutes() {
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path='allTeachersList' element={<AllTeachersList />} />
                     <Route path='addEvent' element={<AddEvent />} />
+                    <Route path='/usersList' element={<UsersList />} />
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />

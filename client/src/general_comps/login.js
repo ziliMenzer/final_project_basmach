@@ -56,7 +56,7 @@ export default function Login() {
           }
         }
         else if (userRole === "admin") {
-          nav("/userList");
+          nav("/usersList");
         }
       }
     }
