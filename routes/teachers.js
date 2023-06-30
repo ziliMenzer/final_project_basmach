@@ -21,10 +21,22 @@ router.get("/", async (req, res) => {
   }
 })
 //get all of teacher info
-router.get("/teacherInfo/",auth, async (req, res) => {
+router.get("/myInfo",auth, async (req, res) => {
   try {
     let userData = await UserModel.findOne({ _id: req.tokenData._id });
     let teacherData = await TeacherModel.findOne({ user_id: req.tokenData._id });
+    const fullTeacher = {...userData.toObject(),...teacherData.toObject()};
+    res.json(fullTeacher);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Error", err });
+  }
+});
+router.get("/teacherInfo/:id", async (req, res) => {
+  let id= req.params.id;
+  try {
+    let userData = await UserModel.findOne({ _id: id });
+    let teacherData = await TeacherModel.findOne({ user_id: id });
     const fullTeacher = {...userData.toObject(),...teacherData.toObject()};
     res.json(fullTeacher);
   } catch (err) {

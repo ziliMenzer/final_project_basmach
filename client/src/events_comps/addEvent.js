@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { AppContext } from '../context/userProvider';
+import { TOKEN_NAME } from '../services/apiService';
 
 const AddEventModal = ({ onAdd, onClose }) => {
   const [teacher_id, setTeacher_id] = useState('');
@@ -16,14 +17,15 @@ const AddEventModal = ({ onAdd, onClose }) => {
   }, []);
 
   const handleTeacherId = () => {
-    //setTeacher_id(user._id);
-    setTeacher_id(user._id);
+    //console.log(user._id);
+    setTeacher_id(user.user_id);
   }
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
   const handleStudentChange = (e) => {
+    console.log(e.target.value);
     setStudent_id(e.target.value);
   };
   const handleStartChange = (e) => {
@@ -48,13 +50,12 @@ const AddEventModal = ({ onAdd, onClose }) => {
     onClose();
   };
   const getNameById = (student_id) => {
-      
+
   }
-  // const fillSelectBox = () => {
-  //   myStudents.map((item) => {
-  //     return item.first_name+" "+item.last_name;
-  //   });
-  //};
+  // const getIdByName = (student_id) => {
+
+  // }
+
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
@@ -68,17 +69,13 @@ const AddEventModal = ({ onAdd, onClose }) => {
           </Form.Group>
           <Form.Group controlId="student_id">
             <Form.Label>Student:</Form.Label>
-            <Form.Select defaultValue={getNameById(student_id)}>
+            <Form.Select defaultValue={student_id} onChange={handleStudentChange}>
+              <option value="">Select a student</option>
               {myStudents.map(student => (
-                <option onChange={handleStudentChange} key={student._id}>
+                <option defaultValue={student.user_id} key={student.user_id}>
                   {student.first_name} {student.last_name}
                 </option>
               ))}
-
-              {/* <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option> */}
             </Form.Select>
           </Form.Group>
           {/* <Form.Group controlId="student_id">

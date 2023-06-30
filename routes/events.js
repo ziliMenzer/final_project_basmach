@@ -4,13 +4,14 @@ const { auth } = require("../middlewares/auth");
 const { EventModel, eventValid } = require("../models/eventModel");
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
+  let id = req.params.id;
   try {
     let data;
     if (req.tokenData.role == "student") {
-      data = await EventModel.find({ student_id: req.tokenData._id });
+      data = await EventModel.find({ student_id: id });
     } else if (req.tokenData.role == "teacher") {
-      data = await EventModel.find({ teacher_id: req.tokenData._id });
+      data = await EventModel.find({ teacher_id: id });
     } else {
       return res.status(401).json({ msg: "You need a valid token" });
     }

@@ -71,7 +71,6 @@ router.get("/myInfo/:id", auth, async (req, res) => {
     try {
         let userData = await UserModel.findOne({ _id: studentId });
         let studentData = await StudentModel.findOne({ user_id: studentId });
-
         const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
         res.json(fullStudent);
     } catch (err) {

@@ -28,14 +28,14 @@ export default function Login() {
       let url = API_URL + '/users/login';
       const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
       console.log(data.token);
-
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
         const decodedToken = jwt_decode(data.token);
         const userRole = decodedToken.role;
-        console.log(userRole)
+        console.log(decodedToken._id);
+        //console.log(userRole)
         if (userRole === "teacher") {
-          let url = API_URL + `/teachers/teacherInfo/`;
+          let url = API_URL + `/teachers/myInfo`;
           let teacher = await doApiTokenGet(url);
           console.log("teacher", teacher.data);
           setUser(teacher.data);

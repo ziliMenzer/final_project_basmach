@@ -6,7 +6,7 @@ const { config } = require("../config/secret")
 let studentSchema = new mongoose.Schema({
 
   user_id: String,
-  status: { type: String, default: "un-active" },
+  status: { type: String, default: "active" },
   subjects_array: {
     traffic_signs: {type: Number, default: 0},
     turns: {type: Number, default: 0},

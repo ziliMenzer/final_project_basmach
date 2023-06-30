@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import FullCalendar from '@fullcalendar/react';
@@ -6,12 +6,14 @@ import FullCalendar from '@fullcalendar/react';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
 import { doApiTokenGet, doApiMethodToken, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
+import { AppContext } from '../context/userProvider';
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
   const [showEditEventModal, setShowEditEventModal] = useState(false);
   const [showAddEventModal, setShowAddEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     console.log(events);
@@ -24,7 +26,7 @@ const Calendar = () => {
 
   const doApi = async () => {
     try {
-      let url = API_URL + '/events/';
+      let url = API_URL + `/events/${user.user_id}`;
       const { data } = await doApiTokenGet(url);
       console.log(data);
       setEvents(data);
@@ -50,6 +52,7 @@ const Calendar = () => {
 
   const handleEventUpdate = async (updatedEvent, id) => {
     try {
+      console.log(id);
       let url = API_URL + `/events/${id}`;
       const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedEvent);
       console.log(data);
@@ -104,16 +107,19 @@ const Calendar = () => {
   };
 
   return (
-    <div>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin]}
-        initialView="timeGridWeek"
-        events={(events)}
-        //events={events}
-        eventClick={handleEventClick}
-        slotDuration="00:30:00" // Set the duration of each time slot to 30 minutes
-        slotMinTime="06:00:00" // Set the minimum time to display on the calendar
-      />
+    <div className='container'>
+
+      <div className=''>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridWeek"
+          events={(events)}
+          //events={events}
+          eventClick={handleEventClick}
+          slotDuration="00:30:00" // Set the duration of each time slot to 30 minutes
+          slotMinTime="06:00:00" // Set the minimum time to display on the calendar
+        />
+      </div>
 
       {selectedEvent && (
         <EditEventModal
@@ -123,12 +129,12 @@ const Calendar = () => {
           onClose={handleCloseModal}
         />
       )}
-
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
-
-      <button onClick={() => setShowAddEventModal(true)}>Add Event</button>
+      <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+        <button className='btn btn-dark ' onClick={() => setShowAddEventModal(true)}>Add Event</button>
+      </div>
     </div>
   );
 };
