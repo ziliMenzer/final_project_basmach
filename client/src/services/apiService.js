@@ -1,8 +1,12 @@
 import axios from "axios";
 
-export const API_URL = "http://localhost:3001"
+export const API_URL = "http://localhost:3000"
 // export const API_URL = "https://monkeys.co.il"
 export const TOKEN_NAME = "DRIVING-SECRET"
+export const RESTAURNAT_ID = "res-ID";
+export const regEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+export const regPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*.<>])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+export const regPhone = /^[0-9]+$/;
 
 export const doApiGet = async (_url) => {
   try {

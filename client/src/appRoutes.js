@@ -6,6 +6,7 @@ import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
 import Header from './layout/header'
 import Logout from './general_comps/logout'
+import SignUp from './student_comps/register'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({})
@@ -13,23 +14,22 @@ export default function AppRoutes() {
         <BrowserRouter>
 
             <AppContext.Provider value={{
-                
+                user,setUser
             }}>
                 <Header/>
 
                 <header className='p-2 container bg-warning'>
-                    <Link to="/">Home</Link> 
-                    <Link to="/login">login</Link> 
-                    <Link to="/allTeachersList">AllTeachersList</Link> 
-                    <Link to="/pixa/cats">Pixa</Link> 
-                    <Link to="/cars">Cars</Link> 
-                    <Link to="/casino">Casino</Link>
+                    <Link to="/">Home </Link> 
+                    <Link to="/login">login </Link> 
+                    <Link to="/register">register </Link> 
+                    <Link to="/allTeachersList">AllTeachersList </Link> 
                 </header>
                 {/* outlet */}
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path='allTeachersList' element={<AllTeachersList/>}/>
+                    <Route path="/register" element={<SignUp />} />
+                    <Route path='/allTeachersList' element={<AllTeachersList/>}/>
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />
