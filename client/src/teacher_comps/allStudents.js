@@ -7,8 +7,8 @@ export default function AllStudents() {
   const { myStudents, setMyStudents } = useContext(AppContext);
   useEffect(() => {
     doApi();
-  }, []);
-
+  }, [setMyStudents]);
+  
   const doApi = async () => {
     let url = API_URL + '/students';
     try {
@@ -35,7 +35,7 @@ export default function AllStudents() {
       <div className='row g-2'>
         {myStudents.map(item => {
           return (
-            <StudentItme key={item._id} item={item} />
+            <StudentItme key={item._id} item={item}  doApi={doApi}/>
           )
         })}
         {myStudents.length < 1 && <h2>Loading....</h2>}
