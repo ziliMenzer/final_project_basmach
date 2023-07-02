@@ -12,16 +12,17 @@ const InputFirstName = (props) => {
     return (
         <>
             <div>
-                <label htmlFor="firstName" className="sr-only">
-                    {label}                                </label>
-                <input defaultValue={defaultValue} {...register('fullName[firstName]', { required: { value: true, message: 'First name is requried' }, minLength: { value: 2, message: "First name must be at least 2 characters" } })}
-                    id="firstName"
-                    name="fullName[firstName]"
+                <label htmlFor="first_name" className="sr-only">
+                    {label}                                
+                </label>
+                <input defaultValue={defaultValue} {...register('first_name', { required: { value: true, message: 'First name is requried' }, minLength: { value: 2, message: "First name must be at least 2 characters" } })}
+                    id="first_name"
+                    name="first_name"
                     type="text"
                     className={className}
                     placeholder="First name" />
-                {errors.fullName && errors.fullName.firstName.type == 'minLength' && <div className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>{errors?.fullName.firstName?.message}</div>}
-                {errors.fullName && errors.fullName.firstName.type == 'required' && <div className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>{errors?.fullName.firstName?.message}</div>}
+                {errors.first_name && errors.first_name.type == 'minLength' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
+                {errors.first_name && errors.first_name.type == 'required' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
             </div>
         </>
     )

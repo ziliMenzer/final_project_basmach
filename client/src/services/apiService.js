@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "http://localhost:3000"
+export const API_URL = "http://localhost:3001"
 // export const API_URL = "https://monkeys.co.il"
 export const TOKEN_NAME = "DRIVING-SECRET"
 export const RESTAURNAT_ID = "res-ID";
@@ -35,7 +35,7 @@ export const doApiTokenGet = async (_url) => {
   }
 }
 
-export const doApiMethodSignUpLogin = async (_url, _method, _body = {}) => {
+export const doApiMethodSignUpLogin = async (_url, _method, _body ) => {
   try {
     let resp = await axios({
       method: _method,

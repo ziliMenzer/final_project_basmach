@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner'
 import { useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import { API_URL, doApiMethodSignUpLogin } from '../services/apiService';
+import { API_URL, doApiMethod, doApiMethodSignUpLogin } from '../services/apiService';
 import InputFirstName from '../ui/inputs/inputFirstName';
 import InputLastName from '../ui/inputs/inputLastName';
-// import InputPinCode from '../ui/inputs/groupLinked/inputPinCode';
 import InputPasswordLinked from '../ui/inputs/inputPasswordLinked';
-// import InputConfirmPassword from '../ui/inputs/inputConfirmPassword';
 import InputEmailLinked from '../ui/inputs/inputEmailLinked';
 import InputPhoneLinked from '../ui/inputs/inputPhoneLinked';
-import InputAddressLinked from '../ui/inputs/inputAddressLinked';
+import InputConfirmPassword from '../ui/inputs/inputConfirmPassword';
+import FilterCities from '../ui/inputs/filterCities';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -32,14 +31,21 @@ const SignUp = () => {
 
     const doApi = async (_dataBody) => {
         try {
-            const url = API_URL + '/users/register';
+            const url = API_URL + '/users/signup';
             const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
-            if (data.email) {
-                nav(`/messages/?name=${data.fullName.firstName}`)
+            // if (data.email) {
+            //     nav(`/messages/?name=${data.fullName.firstName}`)
+            // }
+            // else {
+
+            // }
+
+            const student = {
+                user_id: data._id
             }
-            else {
-                
-            }
+            const url2 = API_URL + '/students/';
+            const { data2 } = await doApiMethod(url2, "POST", student);
+            nav("/allTeachersList")
         } catch (err) {
             alert(err.response.data.msg || err.response.data[0].message)
             setIsSubmitted(false);
@@ -91,22 +97,12 @@ const SignUp = () => {
                                 errors={errors}
                                 className={"relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
                             />
-                            
-                            <InputAddressLinked
-                                label={" address "}
+
+                            <FilterCities
+                                label={" Address "}
                                 register={register}
                                 errors={errors}
-                                className={"relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
                             />
-
-                            {/* <InputPinCode
-                                label={" Pin Code"}
-                                register={register}
-                                errors={errors}
-                                className={"relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
-                            /> */}
-
-
 
                             <InputPasswordLinked
                                 label={" Password "}
@@ -115,7 +111,7 @@ const SignUp = () => {
                                 className={"relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
                             />
 
-                            {/* <InputConfirmPassword
+                            <InputConfirmPassword
                                 getValues={getValues}
                                 label={"confirm Password"}
                                 register={register}
@@ -123,11 +119,9 @@ const SignUp = () => {
                                 className={classNames(errors.confirmPassword ? "relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     :
                                     "relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm")}
-                            /> */}
+                            />
 
                         </div>
-
-
 
                         <div>
 

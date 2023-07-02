@@ -21,7 +21,7 @@ const InputEmailLinked = (props) => {
                     className={className}
                     placeholder="Email address"
                 />
-                {errors.email && <p className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>Enter valid email</p>}
+                {errors.email && <p className='text-white font-bold bg-red-800 border-gray-300  py-1'>Enter valid email</p>}
             </div>
         </>
     )

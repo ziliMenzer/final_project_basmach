@@ -16,15 +16,21 @@ router.get("/getAllUsers", authAdmin, async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
+    console.log(req.body);
     let valdiateBody = userValid(req.body);
+    console.log("start signup in user");
+    console.log(valdiateBody);
     if (valdiateBody.error) {
+        console.log("valdiateBody error");
         return res.status(400).json(valdiateBody.error.details)
     }
     try {
+        console.log("start log");
         let user = new UserModel(req.body);
         user.password = await bcrypt.hash(user.password, 10)
         await user.save();
         res.status(201).json(user)
+        console.log("stop log");
     }
     catch (err) {
         if (err.code == 11000) {
@@ -34,6 +40,7 @@ router.post("/signup", async (req, res) => {
         res.status(500).json({ msg: "err", err })
     }
 });
+
 router.post("/login", async (req, res) => {
     let validBody = loginValid(req.body);
     if (validBody.error) {

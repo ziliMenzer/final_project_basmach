@@ -10,17 +10,18 @@ const InputLastName = (props) => {
     return (
         <>
             <div>
-                <label htmlFor="lastName" className="sr-only">
-                    {label}                      </label>
+                <label htmlFor="last_name" className="sr-only">
+                    {label}                      
+                </label>
                 <input defaultValue={defaultValue}
-                    {...register('fullName[lastName]', { required: { value: true, message: 'last name is requried' }, minLength: { value: 2, message: "last name must be at least 2 characters" } })}
-                    id=" lastName"
-                    name="fullName[lastName]"
+                    {...register('last_name', { required: { value: true, message: 'last name is requried' }, minLength: { value: 2, message: "last name must be at least 2 characters" } })}
+                    id=" last_name"
+                    name="last_name"
                     type="text"
                     className={className}
                     placeholder="Last name" />
-                {errors.fullName && errors.fullName.lastName.type == 'minLength' && <div className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>{errors?.fullName.lastName?.message}</div>}
-                {errors.fullName && errors.fullName.lastName.type == 'required' && <div className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>{errors?.fullName.lastName?.message}</div>}
+                {errors.last_name && errors.last_name.type == 'minLength' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
+                {errors.last_name && errors.last_name.type == 'required' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
             </div>
         </>
     )

@@ -25,9 +25,9 @@ const InputPhoneLinked = (props) => {
                     autoComplete="phone"
                     className={className}
                     placeholder="Phone number" />
-                {errors.phone && errors.phone.type === 'minLength' && <div className='text-white font-bold text-sm bg-red-800 text-center border-gray-300  py-1'>{errors?.phone?.message}</div>}
-                {errors.phone && errors.phone.type === 'required' && <div className='text-white font-bold bg-red-800 text-center border-gray-300  py-1'>{errors?.phone?.message}</div>}
-                {errors.phone && errors.phone.type === 'maxLength' && <div className='text-white font-bold bg-red-800 text-center border-gray-300  py-1'>{errors?.phone?.message}</div>}
+                {errors.phone && errors.phone.type === 'minLength' && <div className='font-bold text-sm bg-red-800 border-gray-300  py-1'>{errors?.phone?.message}</div>}
+                {errors.phone && errors.phone.type === 'required' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.phone?.message}</div>}
+                {errors.phone && errors.phone.type === 'maxLength' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.phone?.message}</div>}
             </div>
 
         </>

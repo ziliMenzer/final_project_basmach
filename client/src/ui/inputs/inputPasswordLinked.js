@@ -24,9 +24,9 @@ const InputPasswordLinked = (props) => {
                     className={className}
                     placeholder="Password"
                 />
-                {errors.password && errors.password.type == 'required' && <p className='text-white font-bold bg-red-800 text-center  border-gray-300  py-1'>{errors?.password?.message}</p>}
-                {errors.password && errors.password.type == 'minLength' && <p className='text-white font-bold bg-red-800 text-center   border-gray-300  py-1'>{errors?.password?.message}</p>}
-                {errors.password && errors.password.type == 'maxLength' && <p className='text-white font-bold bg-red-800 text-center   border-gray-300  py-1'>{errors?.password?.message}</p>}
+                {errors.password && errors.password.type == 'required' && <p className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.password?.message}</p>}
+                {errors.password && errors.password.type == 'minLength' && <p className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.password?.message}</p>}
+                {errors.password && errors.password.type == 'maxLength' && <p className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.password?.message}</p>}
             </div>
             
         </>
