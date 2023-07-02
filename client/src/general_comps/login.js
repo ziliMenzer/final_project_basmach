@@ -52,7 +52,7 @@ export default function Login() {
             nav("/allTeachersList");
           }
           else {
-            nav("/studentHome")
+            nav("/progress")
           }
         }
         else if (userRole === "admin") {

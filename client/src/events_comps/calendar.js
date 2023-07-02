@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-// import { Paper } from '@material-ui/core';
-// import interactionPlugin from '@fullcalendar/interaction';
+import { Paper, Button } from '@mui/material';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
-import { doApiTokenGet, doApiMethodToken, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
+import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
 import { AppContext } from '../context/userProvider';
 
 const Calendar = () => {
@@ -18,37 +17,27 @@ const Calendar = () => {
   const { user } = useContext(AppContext);
 
   useEffect(() => {
-    if (user.role == "teacher") {
+    if (user.role === "teacher") {
       setIsTeacher(true);
     }
-    console.log(events);
     doApi();
   }, []);
 
   useEffect(() => {
     doApi();
-  }, [selectedEvent])
+  }, [selectedEvent]);
 
   const doApi = async () => {
     try {
       let url = API_URL + `/events/${user.user_id}`;
       const { data } = await doApiTokenGet(url);
-      console.log(data);
       setEvents(data);
     }
     catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-  // const formatEventsForCalendar = (event) => {
-  //   let formated_event = {
-  //     title: event.title,
-  //     student_id: String(event.student_id),
-  //     start: new Date(event.start),
-  //     end: new Date(event.end),
-  //   };
-  //   return formated_event;
-  // };
+  };
+
   const handleEventClick = (info) => {
     const event = info.event;
     setSelectedEvent(event);
@@ -57,12 +46,14 @@ const Calendar = () => {
 
   const handleEventUpdate = async (updatedEvent, id) => {
     try {
-      console.log(id);
       let url = API_URL + `/events/${id}`;
-      const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedEvent);
-      console.log(data);
-      const updatedEvents = [...events, updatedEvent];
-      setEvents(updatedEvents);
+      await doApiMethodTokenNotStringify(url, "PUT", updatedEvent);
+      const updatedEvents = [...events];
+      const eventIndex = updatedEvents.findIndex((event) => event.id === id);
+      if (eventIndex !== -1) {
+        updatedEvents[eventIndex] = updatedEvent;
+        setEvents(updatedEvents);
+      }
     }
     catch (err) {
       console.log(err);
@@ -73,34 +64,25 @@ const Calendar = () => {
 
   const handleEventDelete = async (_id) => {
     try {
-      console.log(_id);
       let url = API_URL + `/events/${_id}`;
-      const { data } = await doApiMethodTokenNotStringify(url, "DELETE");
-      console.log(data);
-      // const updatedEvents = [...events];
-      // setEvents(updatedEvents);
+      await doApiMethodTokenNotStringify(url, "DELETE");
+      setEvents(events.filter((event) => event.id !== _id));
     }
     catch (err) {
-      console.log(err)
+      console.log(err);
     }
-    //const updatedEvents = events.filter((event) => event.id !== selectedEvent.id);
-    doApi();
-    console.log(events);
     setSelectedEvent(null);
     setShowEditEventModal(false);
   };
 
   const handleAddEvent = async (_newEvent) => {
     try {
-      console.log(_newEvent);
       let url = API_URL + '/events/';
       const { data } = await doApiMethodTokenNotStringify(url, "POST", _newEvent);
-      console.log(data);
-      const updatedEvents = [...events, _newEvent];
-      setEvents(updatedEvents);
+      setEvents([...events, data]);
     }
     catch (err) {
-      console.log(err)
+      console.log(err);
     }
     setShowAddEventModal(false);
   };
@@ -112,16 +94,16 @@ const Calendar = () => {
   };
 
   return (
-    <div className='container'>
-      {/* <Paper> */}
-        <FullCalendar
+    <div  className='container'>
+      <Paper elevation={3} className='calendar-paper'>
+        <FullCalendar 
+          id='calendar'
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
-          events={(events)}
-          //events={events}
+          events={events}
           eventClick={handleEventClick}
-          slotDuration="00:30:00" // Set the duration of each time slot to 30 minutes
-          slotMinTime="06:00:00" // Set the minimum time to display on the calendar
+          slotDuration="00:30:00"
+          slotMinTime="06:00:00"
         />
 
         {selectedEvent && isTeacher && (
@@ -132,16 +114,19 @@ const Calendar = () => {
             onClose={handleCloseModal}
           />
         )}
-      {/* </Paper> */}
+      </Paper>
+
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
-      {isTeacher && (<div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
-        <button className='btn btn-dark ' onClick={() => setShowAddEventModal(true)}>Add Event</button>
-      </div>)}
+
+      {isTeacher && (
+        <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+          <Button variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Calendar;
-

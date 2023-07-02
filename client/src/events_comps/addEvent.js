@@ -172,7 +172,8 @@ const AddEventModal = ({ onAdd, onClose }) => {
         <Form onSubmit={handleSubmit(handleAdd)}>
           <Form.Group controlId="title">
             <Form.Label>Title:</Form.Label>
-            <Form.Control type="text" {...register('title', { required: 'Title is required' })} />
+            <Form.Control type="text" 
+            {...register('title', { required: 'Title is required' })} />
             {errors.title && <div className="error">{errors.title.message}</div>}
           </Form.Group>
           <Form.Group controlId="student_id">
@@ -214,3 +215,4 @@ const AddEventModal = ({ onAdd, onClose }) => {
 };
 
 export default AddEventModal;
+
