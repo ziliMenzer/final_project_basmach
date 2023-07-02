@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { Paper } from '@material-ui/core';
+// import { Paper } from '@material-ui/core';
 // import interactionPlugin from '@fullcalendar/interaction';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
@@ -113,7 +113,7 @@ const Calendar = () => {
 
   return (
     <div className='container'>
-      <Paper>
+      {/* <Paper> */}
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
@@ -132,7 +132,7 @@ const Calendar = () => {
             onClose={handleCloseModal}
           />
         )}
-      </Paper>
+      {/* </Paper> */}
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
