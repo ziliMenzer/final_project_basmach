@@ -11,6 +11,7 @@ import AddEvent from './events_comps/addEvent'
 import Header from './layout/header'
 import UsersList from './admin_comps/userList'
 import AllStudents from './teacher_comps/allStudents'
+import FilterTeachers from './student_comps/filterTeachers'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
@@ -42,6 +43,7 @@ export default function AppRoutes() {
                     <Route path='addEvent' element={<AddEvent />} />
                     <Route path='/usersList' element={<UsersList />} />
                     <Route path='/allStudents' element={<AllStudents />} />
+                    <Route path='/filterTeachers' element={<FilterTeachers />} />
                     {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />

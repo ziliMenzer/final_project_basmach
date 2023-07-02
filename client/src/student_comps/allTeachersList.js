@@ -43,6 +43,7 @@ export default function AllTeachersList() {
     };
     return (
         <div className='container'>
+            <button>סינון מורים</button>
             <h2>Teachers List:</h2>
             <div className='row g-2'>
                 {teachersList.map(item => {

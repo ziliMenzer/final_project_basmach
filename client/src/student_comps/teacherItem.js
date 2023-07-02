@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import { AppContext } from '../context/userProvider';
+import { API_URL, doApiMethodTokenNotStringify } from '../services/apiService';
 
 export default function TeacherItem(props) {
-    let item = props.item;
-    const addStudent=()=>{
-
+  const { user, setUser } = useContext(AppContext);
+  const item = props.item;
+  const [showMessage, setShowMessage] = useState(false);
+  const addStudent = async () => {
+    if(user.teacher_id!==null){
+      alert("עליך לעזוב את המורה הקיים לפני שתצטרף למורה חדש");
     }
+    const updatedSudent = {
+      user_id: user.user_id,
+      teacher_id: item.user_id
+    }
+    try {
+      console.log(user.user_id);
+      let url = API_URL + `/students/${user.user_id}`;
+      const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedSudent);
+      console.log(data);
+      //setUser()
+      //setMyStudents(updatedMyStudents);
+    }
+    catch (err) {
+      console.log(err);
+    }
+    setShowMessage(false);
+
+  }
   return (
     <div className='col-md-4 bg-light'>
-        <h2>name: {item.first_name} {item.last_name}</h2>
-        <h2>license type: {item.license_type}</h2>
-        <h2>rating: {item.rating}</h2>
-        <button onClick={()=>{
-            <div className='col-md-4 bg-light'>האם את/ה בטוח/ה שתרצה ללמוד אצל: {item.first_name} {item.last_name}
-            <button onClick={addStudent}>אישור</button>
-            </div>
-            
-        }}>בחירת מורה</button>
+      <h2>name: {item.first_name} {item.last_name}</h2>
+      <h2>license type: {item.license_type}</h2>
+      <h2>rating: {item.rating}</h2>
+      <button onClick={() => setShowMessage(true)}>בחירת המורה</button>
+      {showMessage && <div>האם את/ה בטוח/ה שתרצה ללמוד אצל: {item.first_name} {item.last_name}
+        <button onClick={addStudent}>אישור</button>
+      </div>}
+
+
+
     </div>
   )
 }

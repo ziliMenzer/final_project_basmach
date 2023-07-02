@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import FullCalendar from '@fullcalendar/react';
+import { Paper } from '@material-ui/core';
 // import interactionPlugin from '@fullcalendar/interaction';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
@@ -13,9 +14,13 @@ const Calendar = () => {
   const [showEditEventModal, setShowEditEventModal] = useState(false);
   const [showAddEventModal, setShowAddEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isTeacher, setIsTeacher] = useState(false);
   const { user } = useContext(AppContext);
 
   useEffect(() => {
+    if (user.role == "teacher") {
+      setIsTeacher(true);
+    }
     console.log(events);
     doApi();
   }, []);
@@ -108,8 +113,7 @@ const Calendar = () => {
 
   return (
     <div className='container'>
-
-      <div className=''>
+      <Paper>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
@@ -119,22 +123,22 @@ const Calendar = () => {
           slotDuration="00:30:00" // Set the duration of each time slot to 30 minutes
           slotMinTime="06:00:00" // Set the minimum time to display on the calendar
         />
-      </div>
 
-      {selectedEvent && (
-        <EditEventModal
-          event={selectedEvent}
-          onUpdate={handleEventUpdate}
-          onDelete={handleEventDelete}
-          onClose={handleCloseModal}
-        />
-      )}
+        {selectedEvent && isTeacher && (
+          <EditEventModal
+            event={selectedEvent}
+            onUpdate={handleEventUpdate}
+            onDelete={handleEventDelete}
+            onClose={handleCloseModal}
+          />
+        )}
+      </Paper>
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
-      <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+      {isTeacher && (<div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
         <button className='btn btn-dark ' onClick={() => setShowAddEventModal(true)}>Add Event</button>
-      </div>
+      </div>)}
     </div>
   );
 };

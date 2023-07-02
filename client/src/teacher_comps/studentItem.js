@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EditStudent from './editStudent';
 
-export default function StudentItme(props) {
+export default function StudentItem(props) {
     const [showModal, setShowModal] = useState(false);
     let item = props.item;
     // const addStudent = () => {

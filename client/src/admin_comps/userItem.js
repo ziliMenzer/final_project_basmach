@@ -15,8 +15,11 @@ export default function UserItem(props) {
         bodyData = { role: "admin" }
       }
     }
-    else {
+    else if(item.role=="teacher"){
       bodyData = { role: "user" }
+    }
+    else {
+      alert("לא ניתן לשנות משתמש זה")
     }
 
     let url = API_URL + "/users/changeRole/" + item._id;

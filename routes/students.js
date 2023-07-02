@@ -125,11 +125,9 @@ router.put("/:idEdit", auth, async (req, res) => {
         let data;
         if (req.tokenData.role == "admin") {
             data = await StudentModel.updateOne({ user_id: editId }, req.body);
-            await data.save();
         }
         else {
             data = await StudentModel.updateOne({ user_id: editId }, req.body);
-            await data.save()
         }
         res.json(data);
     }
