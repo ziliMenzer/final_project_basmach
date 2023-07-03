@@ -22,33 +22,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// router.get("/", auth, async (req, res) => {
-//     try {
-//         let data;
-//         if (req.tokenData.role == "admin") {
-//             data = await EventModel.find({}, req.body);
-//         }
-//         else {
-//             try {
-//                 if (req.tokenData.role == "teacher") {
-//                     data = await EventModel.find({ teacher_id: req.tokenData._id }, req.body);
-//                 }
-//                 else {
-//                     data = await EventModel.find({ student_id: req.tokenData._id }, req.body);
-//                 }
-//             }
-//             catch (err) {
-//                 console.log(err);
-//             }
-//         }
-//         res.json(data);
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({ msg: "there error try again later", err })
-//     }
-// });
-
 router.get("/eventInfo/:id", auth, async (req, res) => {
   try {
     let data;
@@ -82,14 +55,14 @@ router.post("/", auth, async (req, res) => {
     return res.status(400).json(validateBody.error.details)
   }
   try {
-    //if (req.tokenData.role == "teacher" || req.tokenData.role == "admin") {
+    if (req.tokenData.role == "teacher" || req.tokenData.role == "admin") {
       let event = new EventModel(req.body);
       await event.save();
       res.status(201).json(event);
-    //}
-    //else {
-     // res.status(500).json({ msg: "you nead to be a teacher to access this endpoint" });
-    //}
+    }
+    else {
+     res.status(500).json({ msg: "you nead to be a teacher to access this endpoint" });
+    }
   }
   catch (err) {
     console.log(err)
@@ -117,10 +90,10 @@ router.put("/:idEdit", async (req, res) => {
 router.delete("/:idDel", async (req, res) => {
   try {
     let delId = req.params.idDel;
-    //if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
+    if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
       let data = await EventModel.deleteOne({ _id: delId });
       res.json(data);
-    //}
+    }
   }
   catch (err) {
     console.log(err);

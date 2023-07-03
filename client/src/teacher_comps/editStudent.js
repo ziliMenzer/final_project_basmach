@@ -10,7 +10,7 @@ export default function EditStudent(props) {
     const student = props.student;
     const showModal = props.showModal;
     const setShowModal = props.setShowModal;
-    const doApi = props.doApi;
+    // const doApi = props.doApi;
     const { user, myStudents, setMyStudents } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [trafficSigns, setTrrafficSigns] = useState(student.subjects_array.traffic_signs || 0);

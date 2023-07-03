@@ -10,14 +10,15 @@ export default function TeacherItem(props) {
     if(user.teacher_id!==null){
       alert("עליך לעזוב את המורה הקיים לפני שתצטרף למורה חדש");
     }
-    const updatedSudent = {
+    const updatedStudent = {
       user_id: user.user_id,
+      status:"waiting",
       teacher_id: item.user_id
     }
     try {
       console.log(user.user_id);
       let url = API_URL + `/students/${user.user_id}`;
-      const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedSudent);
+      const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedStudent);
       console.log(data);
       //setUser()
       //setMyStudents(updatedMyStudents);

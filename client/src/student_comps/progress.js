@@ -7,6 +7,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const Progress = () => {
   const { user } = useContext(AppContext);
+  
   const subjectsArray = user.subjects_array;
   let total = 0;
   Object.keys(subjectsArray).map(item => {
