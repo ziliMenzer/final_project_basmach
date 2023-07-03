@@ -35,7 +35,7 @@ exports.userValid = (_reqBody) => {
     password: Joi.string()
       .required()
       .min(8)
-      .max(20),
+      .max(70),
     profile_image: Joi.string().allow(null, ""),
     role: Joi.string().allow("user")
   })
@@ -49,7 +49,7 @@ exports.loginValid = (_reqBody) => {
     password: Joi.string()
     .required()
     .min(8)
-    .max(20)
+    .max(70)
   });
   return joiSchema.validate(_reqBody);
 }

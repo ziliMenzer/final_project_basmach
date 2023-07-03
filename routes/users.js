@@ -77,17 +77,46 @@ router.delete("/:idDel", auth, async (req, res) => {
 
 router.put("/:idEdit", auth, async (req, res) => {
     let validBody = userValid(req.body);
+    // const {
+    //     first_name,
+    //     last_name,
+    //     email,
+    //     phone,
+    //     password,
+    //     address,        
+    //     profile_image,
+    //     role
+    //   } = req.body;
+    console.log(req.body)
     if (validBody.error) {
         return res.status(400).json(validBody.error.details);
     }
     try {
         let editId = req.params.idEdit;
+        console.log("editId: "+ editId)
         let data;
+        // let { password } = req.body;
+        // let passwordHash = await bcrypt.hash(password, 10)
+        // const editedUser = new UserModel({
+        //     first_name,
+        //     last_name,
+        //     email,
+        //     phone,
+        //     password: passwordHash,
+        //     address,        
+        //     profile_image,
+        //     role
+        //   });
+        // if (req.body.password) {
+        //     console.log("1- "+req.body.password)
+        //     req.body.password = await bcrypt.hash(req.body.password, 10);
+        //     console.log(req.body.password)
+        // }
         if (req.tokenData.role == "admin") {
             data = await UserModel.updateOne({ _id: editId }, req.body);
         }
         else {
-            data = await UserModel.updateOne({ _id: editId, userId: req.tokenData._id }, req.body);
+            data = await UserModel.updateOne({ _id: editId , _id: req.tokenData._id },req.body);
         }
         res.json(data);
     }

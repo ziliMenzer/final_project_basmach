@@ -3,28 +3,39 @@ import { AppContext } from '../context/userProvider';
 import "./studentHome.css";
 import { Form, FormControl, Button } from 'react-bootstrap';
 import { doApiTokenGet, doApiMethodToken, API_URL, TOKEN_NAME } from '../services/apiService';
-
+import axios from 'axios';
 
 
 export default function StudentHome() {
     const { user, setUser, updateUserDetails } = useContext(AppContext);
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [phone, setPhone] = useState();
-    const [editedName, setEditedName] = useState('');
+    const [first_name, setFirstName] = useState('');
+    const [last_name, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [editedFirstName, setEditedFirstName] = useState('');
+    const [editedLastName, setEditedLastName] = useState('');
     const [editedEmail, setEditedEmail] = useState('');
     const [editedPhone, setEditedPhone] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        setName(user.first_name + " " + user.last_name);
+        setFirstName(user.first_name);
+        setLastName(user.last_name);
         setEmail(user.email);
         setPhone(user.phone);
     }, [user]);
 
+    // useEffect(()=>{
+    //     setFirstName(user.first_name);
+    //     setLastName(user.last_name);
+    //     setEmail(user.email);
+    //     setPhone(user.phone);
+    // },[updateUserDetails]);
+
     const handleEditClick = () => {
         setIsEditing(true);
-        setEditedName(name);
+        setEditedFirstName(first_name);
+        setEditedLastName(last_name);
         setEditedEmail(email);
         setEditedPhone(phone);
     };
@@ -35,28 +46,33 @@ export default function StudentHome() {
         // Perform any validation if needed
 
         // Update the field values in the state
-        setName(editedName);
+        setFirstName(editedFirstName);
+        setLastName(editedLastName);
         setEmail(editedEmail);
         setPhone(editedPhone);
         setIsEditing(false);
 
         // Update the user context value with the edited details
-        updateUserDetails({
-            first_name: editedName.split(' ')[0],
-            last_name: editedName.split(' ')[1],
-            email: editedEmail,
-            phone: editedPhone
-        });
+        // updateUserDetails({
+        //     first_name: editedFirstName,
+        //     last_name: editedLastName,
+        //     email: editedEmail,
+        //     phone: editedPhone
+        // });
         try {
-            let url = API_URL + `/students/${user._id}`;
-            const { data } = await doApiMethodToken(url, "PUT", {
-                user_id: user.user_id,
-                status: {},
-                subjects_array: {},
-                teacher_id: user.teacher_id,
-                number_of_lessons: user.number_of_lessons,
-                debt: user.debt
-            });
+            let url = API_URL + `/users/${user.user_id}`;
+            const info = { 
+                first_name: editedFirstName,
+                last_name: editedLastName,
+                email: editedEmail,
+                phone: editedPhone,
+                password: user.password,
+                address: user.address,
+                profile_image: user.profile_image,
+                role: user.role
+            };
+            const { data } = await doApiMethodToken(url, "PUT", info);
+            console.log(info)
             setUser(data)
         }
         catch (err) {
@@ -68,8 +84,10 @@ export default function StudentHome() {
         const { name, value } = e.target;
 
         // Update the respective edited field value in the state
-        if (name === 'name') {
-            setEditedName(value);
+        if (name === 'first_name') {
+            setEditedFirstName(value);
+        }else if(name === 'last_name'){
+            setEditedLastName(value);
         } else if (name === 'email') {
             setEditedEmail(value);
         } else if (name === 'phone') {
@@ -105,7 +123,7 @@ export default function StudentHome() {
                                                 <div className="col-6 mb-3">
                                                     <label className='label'>Email</label>
                                                     {isEditing ? (
-                                                        <input type="text" name="email" defaultValue={editedEmail} onChange={handleInputChange} />
+                                                        <input type="text" name="email" value={editedEmail} onChange={handleInputChange} />
                                                     ) : (
                                                         <span>{user.email}</span>
                                                     )}
@@ -114,7 +132,7 @@ export default function StudentHome() {
                                                 <div className="col-6 mb-3">
                                                     <label className='label'>Phone</label>
                                                     {isEditing ? (
-                                                        <input type="text" name="phone" defaultValue={editedPhone} onChange={handleInputChange} />
+                                                        <input type="text" name="phone" value={editedPhone} onChange={handleInputChange} />
                                                     ) : (
                                                         <span>{user.phone}</span>
                                                     )}

@@ -85,7 +85,7 @@ export const doApiMethodToken = async (_url, _method, _body) => {
     let resp = await axios({
       method: _method,
       url: _url,
-      data: _body ? JSON.stringify(_body) : {},
+      data: _body,
       headers: {
         // 'Content-Type': 'application/json',
         "x-api-key": localStorage[TOKEN_NAME]
