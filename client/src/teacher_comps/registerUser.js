@@ -10,10 +10,7 @@ import InputPaymentPerLesson from '../ui/inputs/inputPaymentPerLesson';
 import InputLicenseType from '../ui/inputs/inputLicenseType';
 import SignUp from '../student_comps/register';
 
-// function classNames(...classes) {
-//     return classes.filter(Boolean).join(' ')
-// }
-const SignUpTeacher = () => {
+const RegisterUser = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const nav = useNavigate();
@@ -27,13 +24,12 @@ const SignUpTeacher = () => {
 
     const doApi = async (_dataBody) => {
         try {
-            // const teacher = {
-            //     user_id: _dataBody._id, 
-
-            // }
+            const teacher = {
+                user_id: _dataBody._id
+            }
             const url = API_URL + '/teachers/';
-            const { data2 } = await doApiMethod(url, "POST", _dataBody);
-            nav("/allStudent")
+            const { data2 } = await doApiMethod(url, "POST", teacher);
+            nav("/registerTeacher")
         } catch (err) {
             alert(err.response.data.msg || err.response.data[0].message)
             setIsSubmitted(false);
@@ -52,26 +48,7 @@ const SignUpTeacher = () => {
                     <form onSubmit={handleSubmit(onSub)} className="mt-8 space-y-6" action="#" method="POST">
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="-space-y-px rounded-md shadow-sm">
-                            <InputLicenseType
-                                label={" License Type "}
-                                register={register}
-                                errors={errors}
-                                className={"relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
-                            />
-
-                            <InputSex
-                                label={" Sex "}
-                                register={register}
-                                errors={errors}
-                                className={"relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
-                            />
-
-                            <InputPaymentPerLesson
-                                label={" Payment per lesson "}
-                                register={register}
-                                errors={errors}
-                                className={"relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"}
-                            />
+                           <SignUp/>
                         </div>
 
                         <div>
@@ -83,7 +60,7 @@ const SignUpTeacher = () => {
                                     <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                                         <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                                     </span>
-                                    Sign in
+                                    continue
                                 </button>
                                 :
                                 <ThreeDots
@@ -105,4 +82,4 @@ const SignUpTeacher = () => {
     )
 }
 
-export default SignUpTeacher
+export default RegisterUser

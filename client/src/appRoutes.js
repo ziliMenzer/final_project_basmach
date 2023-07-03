@@ -7,6 +7,8 @@ import AllTeachersList from './student_comps/allTeachersList'
 import Header from './layout/header'
 import Logout from './general_comps/logout'
 import SignUp from './student_comps/register'
+import SignUpTeacher from './teacher_comps/resgisterTeacher'
+import RegisterUser from './teacher_comps/registerUser'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({})
@@ -22,6 +24,7 @@ export default function AppRoutes() {
                     <Link to="/">Home </Link> 
                     <Link to="/login">login </Link> 
                     <Link to="/register">register </Link> 
+                    <Link to="/registerTeacher">register Teacher</Link> 
                     <Link to="/allTeachersList">AllTeachersList </Link> 
                 </header>
                 {/* outlet */}
@@ -29,11 +32,8 @@ export default function AppRoutes() {
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<SignUp />} />
+                    <Route path="/registerTeacher" element={<RegisterUser />} />
                     <Route path='/allTeachersList' element={<AllTeachersList/>}/>
-                    {/* <Route path="/counter" element={<Counter />} />
-                    <Route path="/pixa/:searchQ" element={<AppPixa />} />
-                    <Route path="/casino" element={<AppCasino />} />
-                    <Route path="/cars" element={<CarsList />} /> */}
                 </Routes>
                 {/* outlet */}
                 <footer className='p-2 container bg-danger'>footer</footer>

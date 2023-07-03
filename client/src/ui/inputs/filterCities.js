@@ -8,7 +8,7 @@ export default function FilterCities(props) {
   const label = props.label
 
   const [citiesArray, setCitiesArray] = useState([]);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('ירושלים');
 
   useEffect(() => {
     fetchCities();
@@ -32,7 +32,7 @@ export default function FilterCities(props) {
 
   const cityOptions = citiesArray.map((city) => ({
     value: city.שם_ישוב,
-    label: city.שם_ישוב,
+    label: city.שם_ישוב
   }));
 
   return (
@@ -40,9 +40,9 @@ export default function FilterCities(props) {
       <label htmlFor="address" className="sr-only">
         {label}
       </label>
-      <Select {...register('address', { required: { value: true, message: 'address is requried' } })}
+      <Select defaultValue={selectedCity}
+        {...register('address', { required: { value: true, message: 'address is requried' } })}
         options={cityOptions}
-        value={selectedCity}
         onChange={handleChange}
         isClearable
         placeholder="Select a city"
@@ -50,7 +50,7 @@ export default function FilterCities(props) {
       {selectedCity && (
         <p>Selected City: {selectedCity.label || selectedCity.value}</p>
       )}
-      {errors.address.type == 'required' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.address?.message}</div>}
+      {errors.address && errors.address.type == 'required' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.address?.message}</div>}
     </div>
   );
 }
