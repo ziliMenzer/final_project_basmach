@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/userProvider';
 import "./myInfo.css";
-// import HeaderStudent from '../layout/headerStudent';
 import { Form, FormControl, Button } from 'react-bootstrap';
 import { doApiTokenGet, doApiMethodToken, API_URL, TOKEN_NAME, doApiMethodTokenNotStringify } from '../services/apiService';
 import axios from 'axios';
@@ -29,7 +28,7 @@ export default function MyInfo() {
         setPhone(user.phone);
     }, [user]);
 
-  
+
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -76,6 +75,9 @@ export default function MyInfo() {
             setEditedPhone(value);
         }
     };
+    const handeleLeaveTeacher=()=>{
+
+    }
     return (
         <div>
             <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
@@ -96,49 +98,49 @@ export default function MyInfo() {
                                     <div className="col-md-8">
                                         <div className="card-body p-4">
                                             <form onSubmit={handleSaveClick}>
-                                                <h6>פרטים אישיים</h6>
+                                                <h6>פרטים אישיים:</h6>
                                                 <hr className="mt-0 mb-4" />
                                                 <div className="row pt-1">
                                                     <div className="col-6 mb-3">
-                                                        <label className='label'>מייל</label>
+                                                        <label className='label'>מייל - </label>
                                                         {isEditing ? (
                                                             <input type="text" name="email" defaultValue={editedEmail} onChange={handleInputChange} />
                                                         ) : (
                                                             <span>{user.email}</span>
                                                         )}
-                                                        {/* <input readonly="readonly" type="text" defaultValue={user.email} className='form-control-plaintext text-muted border-0'/> */}
+
                                                     </div>
                                                     <div className="col-6 mb-3">
-                                                        <label className='label'>טלפון</label>
+                                                        <label className='label'>טלפון - </label>
                                                         {isEditing ? (
                                                             <input type="text" name="phone" defaultValue={editedPhone} onChange={handleInputChange} />
                                                         ) : (
                                                             <span>{user.phone}</span>
                                                         )}
-                                                        {/* <p className="text-muted">{user.phone}</p> */}
                                                     </div>
                                                 </div>
-                                                <h6>פרטים נוספים</h6>
+                                                <h6>פרטים נוספים:</h6>
                                                 <hr className="mt-0 mb-4" />
                                                 <div className="row pt-1">
                                                     <div className="col-6 mb-3">
-                                                        <h6>סטטוס</h6>
+                                                        <h6>סטטוס:</h6>
                                                         <p defaultValue={user.status} className="text-muted">{user.status}</p>
                                                     </div>
                                                     <div className="col-6 mb-3">
-                                                        <h6>מספר שיעורים</h6>
+                                                        <h6>מספר שיעורים:</h6>
                                                         <p defaultValue={user.number_of_lessons} className="text-muted">{user.number_of_lessons}</p>
                                                     </div>
                                                 </div>
                                                 {isEditing ? (
                                                     <>
-                                                        <button className='rounded-pill' type="submit" onClick={handleSaveClick}>שמירה</button>
-                                                        <button className='rounded-pill' type="button" onClick={() => setIsEditing(false)}>ביטול</button>
+                                                        <button className='rounded-pill p-2' type="submit" onClick={handleSaveClick}>שמירה</button>
+                                                        <button className='rounded-pill p-2' type="button" onClick={() => setIsEditing(false)}>ביטול</button>
                                                     </>
                                                 ) : (
-                                                    <button className='rounded-pill' onClick={handleEditClick}>עריכה</button>
+                                                    <button className='rounded-pill p-2' onClick={handleEditClick}>עריכה</button>
                                                 )}
                                             </form>
+                                            {/* <button className='rounded-pill p-2 m-2' onClick={handeleLeaveTeacher}>עזיבת מורה</button> */}
                                         </div>
                                     </div>
                                 </div>
