@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/userProvider';
 import "./progress.scss";
-import { keyframes } from "styled-components";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { API_URL, doApiTokenGet } from '../services/apiService';
 import PaymentReminder from './paymentReminder';

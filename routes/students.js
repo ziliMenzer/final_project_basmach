@@ -114,6 +114,9 @@ router.put("/:idEdit", auth, async (req, res) => {
         if (req.tokenData.role == "admin"||req.tokenData.role == "teacher") {
             data = await StudentModel.updateOne({ user_id: editId }, req.body);
         }
+        // else  if (req.tokenData.role == "teacher") {
+        //     data = await StudentModel.updateOne({ _id: editId ,teacher_id:req.tokenData._id}, req.body);
+        // }
         else {
             data = await StudentModel.updateOne({ user_id: editId ,user_id:req.tokenData._id}, req.body);
         }

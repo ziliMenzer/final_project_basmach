@@ -103,7 +103,7 @@ export default function Calendar ()  {
 
   return (
     <div className='container'>
-      <Paper elevation={3} className='calendar-paper demo-app'>
+      {/* <Paper elevation={3} className='calendar-paper demo-app'> */}
       <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
         {isTeacher && (
           <Button variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>)}
@@ -133,13 +133,14 @@ export default function Calendar ()  {
             onClose={handleCloseModal}
           />
         )}
-      </Paper>
+      {/* </Paper> */}
 
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
       
     </div>
+    // </div>
   );
 };
 

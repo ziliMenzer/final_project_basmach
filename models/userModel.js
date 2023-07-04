@@ -37,7 +37,7 @@ exports.userValid = (_reqBody) => {
     address: Joi.string().min(5).max(100),
     password: Joi.string()
       .min(8)
-      .max(20),
+      .max(70),
     profile_image: Joi.string().allow(null, ""),
     role: Joi.string().allow("user")
   })

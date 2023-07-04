@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
@@ -20,7 +20,7 @@ export default function AppRoutes() {
     const [user, setUser] = useState({});
     const [myStudents, setMyStudents] = useState([]);
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
 
             <AppContext.Provider value={{
                 user, setUser,
@@ -54,6 +54,6 @@ export default function AppRoutes() {
                 </Routes>
                 <Footer />
             </AppContext.Provider>
-        </BrowserRouter>
+       // </BrowserRouter>
     )
 }

@@ -13,6 +13,7 @@ const Home = () => {
     nav("/routeRegister");
   }
 
+
   return (
     <div className='container'>
       {/* <div className='d-flex justify-content-between'> */}
@@ -29,3 +30,4 @@ const Home = () => {
 };
 
 export default Home;
+

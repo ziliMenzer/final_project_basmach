@@ -83,6 +83,17 @@ router.delete("/:idDel", auth, async (req, res) => {
 
 router.put("/:idEdit", auth, async (req, res) => {
     let validBody = userValid(req.body);
+    // const {
+    //     first_name,
+    //     last_name,
+    //     email,
+    //     phone,
+    //     password,
+    //     address,        
+    //     profile_image,
+    //     role
+    //   } = req.body;
+    console.log(req.body)
     if (validBody.error) {
         return res.status(400).json(validBody.error.details);
     }
