@@ -13,7 +13,6 @@ import UsersList from './admin_comps/userList'
 import AllStudents from './teacher_comps/allStudents'
 import FilterTeachers from './student_comps/filterTeachers'
 import Progress from './student_comps/progress'
-// import Header from './general_comps/navbar'
 import MyInfo from './student_comps/myInfo'
 import Footer from './layout/footer'
 

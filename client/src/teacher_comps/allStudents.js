@@ -53,7 +53,6 @@ export default function AllStudents() {
       let url = API_URL + `/students/${updatedStudent.user_id}`;
       const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedStudent);
       console.log(data);
-
       const updatedStudents = myStudents.map((item) => {
         if (item.user_id === updatedStudent.user_id) {
           return { ...item, ...updatedStudent };
@@ -70,32 +69,48 @@ export default function AllStudents() {
   }
   return (
     <div className='container'>
-      <TabsNav setActiveTab={setActiveTab}></TabsNav>
-      <h2>Students List:</h2>
-      <div className='row g-2'>
-        {activeTab === "/allStudents" &&
-          active.map(item => {
-            return (
-              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
-            );
-          }
-          )}
-        {activeTab === "/waiting" &&
-          waitingStudent.map(item => {
-            return (
-              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
-            );
-          }
-          )}
-        {activeTab === "/un-active" &&
-          notActive.map(item => {
-            return (
-              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
-            );
-          }
-          )}
-        {myStudents.length < 1 && <h2>No Students Yet!</h2>}
-      </div>
+    <TabsNav setActiveTab={setActiveTab}></TabsNav>
+    <div className='row g-2'>
+      {activeTab === "/allStudents" && active.length < 1 && (
+        <h2 className='text-center p-5'>אין לך תלמידים פעילים</h2>
+      )}
+      {activeTab === "/allStudents" &&
+        active.map(item => {
+          return (
+            <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+          );
+        })}
+  
+      {activeTab === "/waiting" && waitingStudent.length < 1 && (
+        <h2 className='text-center p-5'>אין לך תלמידים שממתינים לאישור</h2>
+      )}
+      {activeTab === "/waiting" &&
+        waitingStudent.map(item => {
+          return (
+            <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+          );
+        })}
+  
+      {activeTab === "/un-active" && notActive.length < 1 && (
+        <h2 className='text-center p-5'>אין לך תלמידים לא פעילים</h2>
+      )}
+      {activeTab === "/un-active" &&
+        notActive.map(item => {
+          return (
+            <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+          );
+        })}
+  
+      {/* {activeTab === "/myStudents" && myStudents.length < 1 && (
+        <h2>No Students Yet!</h2>
+      )}
+      {activeTab === "/myStudents" &&
+        myStudents.map(item => {
+          return (
+            <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+          );
+        })} */}
     </div>
-  );
+  </div>
+  )  
 }

@@ -1,0 +1,40 @@
+/* Assuming you have a separate CSS file or you can include it in a style tag in your component */
+.iphone-contact-list {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .contact-details {
+    flex-grow: 1;
+  }
+  
+  .contact-details h2 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  
+  .buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .buttons .btn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-left: 12px;
+    font-size: 16px;
+  }
+  
+  .buttons .btn:focus {
+    outline: none;
+  }
+  
+  .buttons .btn:active {
+    opacity: 0.6;
+  }
+  

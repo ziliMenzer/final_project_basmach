@@ -29,12 +29,7 @@ export default function MyInfo() {
         setPhone(user.phone);
     }, [user]);
 
-    // useEffect(()=>{
-    //     setFirstName(user.first_name);
-    //     setLastName(user.last_name);
-    //     setEmail(user.email);
-    //     setPhone(user.phone);
-    // },[updateUserDetails]);
+  
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -43,39 +38,6 @@ export default function MyInfo() {
         setEditedEmail(email);
         setEditedPhone(phone);
     };
-
-    // const handleSaveClick = async (e) => {
-    //     e.preventDefault();
-
-    //     setFirstName(editedFirstName);
-    //     setLastName(editedLastName);
-    //     setEmail(editedEmail);
-    //     setPhone(editedPhone);
-    //     setIsEditing(false);
-    //     try {
-    //         let url = API_URL + `/users/${user.user_id}`;
-    //         const info = {
-    // first_name: editedFirstName,
-    // last_name: editedLastName,
-    // email: editedEmail,
-    // phone: editedPhone,
-    // address: user.address,
-    // profile_image: user.profile_image,
-    // role: user.role
-    //         };
-    //         const { data } = await doApiMethodTokenNotStringify(url, "PUT", info);
-    //         console.log(info);
-    //         const updatedUser = {
-    //             ...user,
-    //             ...data,
-    //           };
-
-    //           setUser(updatedUser);         
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //     }
-    // };
     const handleSaveClick = async (e) => {
         e.preventDefault();
         const { password, active, _id, date_created, __v, subjects_array, user_id, status, teacher_id, number_of_lessons, debt, ...userWithoutPassword } = user;
@@ -104,8 +66,6 @@ export default function MyInfo() {
     };
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
-        // Update the respective edited field value in the state
         if (name === 'first_name') {
             setEditedFirstName(value);
         } else if (name === 'last_name') {

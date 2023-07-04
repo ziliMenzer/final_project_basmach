@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import { Paper, Button } from '@mui/material';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
@@ -14,7 +15,9 @@ const Calendar = () => {
   const [showAddEventModal, setShowAddEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isTeacher, setIsTeacher] = useState(false);
+  const [currentView, setCurrentView] = useState('timeGridWeek');
   const { user } = useContext(AppContext);
+  const [calendarKey, setCalendarKey] = useState(Date.now()); // Add key state
 
   useEffect(() => {
     if (user.role === "teacher") {
@@ -93,12 +96,29 @@ const Calendar = () => {
     setShowAddEventModal(false);
   };
 
+  const handleSwitchToMonthView = () => {
+    setCurrentView('dayGridMonth');
+    setCalendarKey(Date.now()); // Update the key value to trigger re-render
+  };
+
   return (
-    <div  className='container'>
+    <div className='container'>
       <Paper elevation={3} className='calendar-paper demo-app'>
-        <FullCalendar 
-          plugins={[dayGridPlugin, timeGridPlugin]}
-          initialView="timeGridWeek"
+      <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+        {isTeacher && (
+          <Button variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>)}
+          <Button variant="contained" color="primary" onClick={handleSwitchToMonthView}>Month View</Button>
+        </div>
+        <FullCalendar
+          key={calendarKey} // Add key prop to force re-render
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView={currentView}
+          views={{
+            dayGridMonth: {
+              type: 'dayGrid',
+              duration: { months: 1 },
+            },
+          }}
           events={events}
           eventClick={handleEventClick}
           slotDuration="00:30:00"
@@ -118,12 +138,7 @@ const Calendar = () => {
       {showAddEventModal && (
         <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
-
-      {isTeacher && (
-        <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
-          <Button variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>
-        </div>
-      )}
+      
     </div>
   );
 };

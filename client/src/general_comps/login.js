@@ -42,8 +42,8 @@ export default function Login() {
           nav("/allStudents");
         }
         else if (userRole === "student") {
-          const student_url = API_URL + '/students/studentInfo'
-          const fullStudent = await doApiTokenGet(student_url, "GET", data.token);
+          let student_url = API_URL + '/students/studentInfo'
+          const fullStudent = await doApiTokenGet(student_url);
           console.log(fullStudent.data);
           let teacher_id = fullStudent.data.teacher_id;
           console.log("student", fullStudent.data);

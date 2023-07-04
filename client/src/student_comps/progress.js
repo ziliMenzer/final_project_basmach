@@ -13,6 +13,7 @@ const Progress = () => {
   const [event, setEvent] = useState("");
   const [myEvents, setMyEvents] = useState([]);
   const subjectsArray = user.subjects_array;
+  const subjects_array_symbols=[];
   const subjects_array_hebrew = ["תמרורים", "פניות", "מהירות", "תפעול הרכב", "דרך בין-עירונית", "זכויות קדימה"];
   let total = 0;
 
@@ -128,7 +129,7 @@ const Progress = () => {
       {/* <ProgressBar variant='danger' now={total} label={`${total}%`} /> */}
       <div className='smaller-container'>
         {Object.keys(subjectsArray).map((subject, index) => (
-          <div key={index} className='m-4'>
+          <div key={index} className='m-4 border rounded'>
 
             <h3>{subjects_array_hebrew[index]}:</h3>
             <div className="progress2 progress-moved">
