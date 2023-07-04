@@ -31,7 +31,6 @@ export default function UserItem(props) {
       }
     }
     catch (err) {
-      // console.log(err.response);
       alert("התרחשה שגיאה או שינוי לא חוקי של משתמש");
     }
   }

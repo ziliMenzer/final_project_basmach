@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
-import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
 import Logout from './general_comps/logout'
 import RouteRegister from './general_comps/routeRegister'
@@ -27,25 +26,14 @@ export default function AppRoutes() {
                 user, setUser,
                 myStudents, setMyStudents
             }}>
-                {/* <Header/> */}
-
-                {/* <header className='p-2 container bg-warning'>
-                    <Link to="/">Home </Link>
-                    <Link to="/login">login </Link>
-                    <Link to="/register">register </Link>
-                    <Link to="/registerUser">registerTeacher</Link>
-                    <Link to="/allTeachersList">AllTeachersList </Link>
-                </header> */}
-                {/* outlet */}
                 <Header />
                 <Routes>
                     <Route index element={<Login />} />
-                    {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="/logout" element={<Logout />} />
                     <Route path='/allTeachersList' element={<AllTeachersList />} />
                     <Route path="/routeRegister" element={<RouteRegister />} />
                     <Route path="/register" element={<SignUp />} />
-                    <Route path="/registerUser" element={< RegisterTeacher />} />
+                    <Route path="/registerTeacher" element={< RegisterTeacher />} />
                     <Route path="/confirmation" element={<WaitForConfirmation />} />
                     <Route path="/myInfo" element={<MyInfo />} />
                     <Route path="/progress" element={<Progress />} />
