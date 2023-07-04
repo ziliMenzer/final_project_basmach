@@ -21,10 +21,10 @@ const InputConfirmPassword = (props) => {
                     type="password"
                     autoComplete="current-confirmPassword"
                     className={className}
-                    placeholder="Confirm password"
+                    placeholder="אישור סיסמא"
                 />
 
-                {errors.confirmPassword && <p className='font-bold bg-red-800 border-gray-300  py-1  rounded-b-md'>Passwords not match!</p>}
+                {errors.confirmPassword && <p className='text-danger font-bold bg-red-800 border-gray-300  py-1  rounded-b-md'>Passwords not match!</p>}
             </div>
         </>
     )

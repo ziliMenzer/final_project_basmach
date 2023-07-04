@@ -13,13 +13,13 @@ const InputLicenseType = (props) => {
                 <label htmlFor="license_type" className="sr-only">
                     {label}                                
                 </label>
-                <input defaultValue={defaultValue} {...register('license_type', { required: { value: true, message: 'License type is requried' } })}
+                <input defaultValue={defaultValue} {...register("license_type", { required: { value: true, message: 'License type is requried' } })}
                     id="license_type"
                     name="license_type"
                     type="text"
                     className={className}
                     placeholder="License type" />
-                {errors.license_type && errors.license_type.type == 'required' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.license_type?.message}</div>}
+                {errors.license_type && errors.license_type.type == 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.license_type?.message}</div>}
             </div>
         </>
     )

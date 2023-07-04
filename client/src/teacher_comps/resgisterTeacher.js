@@ -10,9 +10,6 @@ import InputPaymentPerLesson from '../ui/inputs/inputPaymentPerLesson';
 import InputLicenseType from '../ui/inputs/inputLicenseType';
 import SignUp from '../student_comps/register';
 
-// function classNames(...classes) {
-//     return classes.filter(Boolean).join(' ')
-// }
 const SignUpTeacher = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
 

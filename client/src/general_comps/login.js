@@ -78,7 +78,7 @@ export default function Login() {
   return (
     <div className='container'>
       <h1 className='text-center'>Log in please</h1>
-      <form onSubmit={handleSubmit(onSubForm)} className='col-md-6 p-3 shadow mx-auto'>
+      <form onSubmit={handleSubmit(onSubForm)} className="flex h-[calc(100vh-95px)] flex-col justify-center items-center outline-none">
         <label>Email:</label>
         <input {...emailRef} type="text" className='form-control' />
         {errors.email && <div className="text-danger">Enter valid email</div>}
@@ -90,11 +90,11 @@ export default function Login() {
           {!isSubmitted ?
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="rounded-full bg-[#3D5FD9] text-[#F5F7FF] w-[25rem] p-3 mt-5 hover:bg-[#2347C5] mb-5"
             >
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+              {/* <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-              </span>
+              </span> */}
               Log in
             </button>
             :

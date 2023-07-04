@@ -19,9 +19,9 @@ const InputLastName = (props) => {
                     name="last_name"
                     type="text"
                     className={className}
-                    placeholder="Last name" />
-                {errors.last_name && errors.last_name.type == 'minLength' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
-                {errors.last_name && errors.last_name.type == 'required' && <div className='font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
+                    placeholder="שם משפחה" />
+                {errors.last_name && errors.last_name.type == 'minLength' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
+                {errors.last_name && errors.last_name.type == 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.last_name?.message}</div>}
             </div>
         </>
     )

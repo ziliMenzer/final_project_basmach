@@ -7,8 +7,6 @@ const InputFirstName = (props) => {
     const className = props.className
     const defaultValue = props.defaultValue
 
-
-
     return (
         <>
             <div>
@@ -20,9 +18,9 @@ const InputFirstName = (props) => {
                     name="first_name"
                     type="text"
                     className={className}
-                    placeholder="First name" />
-                {errors.first_name && errors.first_name.type == 'minLength' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
-                {errors.first_name && errors.first_name.type == 'required' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
+                    placeholder="שם פרטי" />
+                {errors.first_name && errors.first_name.type == 'minLength' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
+                {errors.first_name && errors.first_name.type == 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.first_name?.message}</div>}
             </div>
         </>
     )

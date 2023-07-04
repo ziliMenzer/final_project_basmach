@@ -1,0 +1,25 @@
+.head {
+    /* font-family: 'Geologica', sans-serif; */
+    /* font-family: 'Caprasimo', cursive; */
+    font-family: 'Varela Round', sans-serif;
+    font-size: 70px;
+    font-weight: 200;
+    text-align: center;
+}
+
+.login-btn {
+    border-radius: 20px;
+    background: black;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 10px;
+}
+
+.register-btn {
+    border-radius: 20px;
+    background: black;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+}
