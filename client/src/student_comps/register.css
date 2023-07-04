@@ -1,0 +1,19 @@
+.sign-up-header {
+    font-family: 'Rubik Spray Paint', cursive;
+    font-size: 40px;
+}
+
+.btn-sign-up {
+    border-radius: 20px;
+    color: white;
+    border: none;
+    background: linear-gradient(to right, rgba(249, 0, 104, 1) 0%, rgba(247, 117, 24, 1) 100%);
+    background: -webkit-linear-gradient(left, rgba(249, 0, 104, 1) 0%, rgba(247, 117, 24, 1) 100%);
+}
+
+.form {
+    border: none;
+    border-radius: 0;
+    width: 420px !important;
+    margin: 0 auto
+}

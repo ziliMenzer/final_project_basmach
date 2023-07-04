@@ -20,6 +20,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ msg: "err", err })
   }
 })
+
 //get all of teacher info
 router.get("/myInfo",auth, async (req, res) => {
   try {
