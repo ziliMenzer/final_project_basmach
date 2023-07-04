@@ -20,7 +20,7 @@ const InputPaymentPerLesson = (props) => {
                     name="payment_per_lesson"
                     type="text"
                     className={className}
-                    placeholder="Payment per lesson" />
+                    placeholder="תשלום לשיעור בודד" />
                 {errors.payment_per_lesson && errors.payment_per_lesson.type == 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.payment_per_lesson?.message}</div>}
             </div>
         </>
