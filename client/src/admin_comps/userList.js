@@ -14,11 +14,11 @@ export default function UsersList() {
     let url = API_URL+"/users/getAllUsers";
     try{
       let resp = await doApiTokenGet(url);
-      console.log(resp.data);
+      // console.log(resp.data);
       setUsersArray(resp.data);
     }
     catch(err){
-      console.log(err);
+      // console.log(err);
       alert("there problem ,try again later")
     }
 

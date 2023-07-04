@@ -15,12 +15,13 @@ import Calendar from './events_comps/calendar'
 import AllStudents from './teacher_comps/allStudents'
 import UsersList from './admin_comps/userList'
 import RegisterTeacher from './teacher_comps/registerTeacher'
+import WaitForConfirmation from './teacher_comps/waitingForConfirmation'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
     const [myStudents, setMyStudents] = useState([]);
     return (
-        // <BrowserRouter>
+        <BrowserRouter>
 
             <AppContext.Provider value={{
                 user, setUser,
@@ -45,7 +46,7 @@ export default function AppRoutes() {
                     <Route path="/routeRegister" element={<RouteRegister />} />
                     <Route path="/register" element={<SignUp />} />
                     <Route path="/registerUser" element={< RegisterTeacher />} />
-                    {/* <Route path="/registerTeacher" element={<SignUpTeacher />} /> */}
+                    <Route path="/confirmation" element={<WaitForConfirmation />} />
                     <Route path="/myInfo" element={<MyInfo />} />
                     <Route path="/progress" element={<Progress />} />
                     <Route path="/calendar" element={<Calendar />} />
@@ -54,6 +55,6 @@ export default function AppRoutes() {
                 </Routes>
                 <Footer />
             </AppContext.Provider>
-       // </BrowserRouter>
+        </BrowserRouter>
     )
 }

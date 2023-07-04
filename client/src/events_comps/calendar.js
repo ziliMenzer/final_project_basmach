@@ -8,6 +8,7 @@ import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
 import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME, doApiMethodToken } from '../services/apiService';
 import UserProvider, { AppContext, UserState } from '../context/userProvider';
+import "./calendar.css"
 
 export default function Calendar ()  {
   const [events, setEvents] = useState([]);
@@ -102,12 +103,16 @@ export default function Calendar ()  {
   };
 
   return (
-    <div className='container'>
-      {/* <Paper elevation={3} className='calendar-paper demo-app'> */}
-      <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+    <div className=' container col-7 w-75 c1 p-3 my-5'>
+    <div  className='container c2 bg-light my-5 p-2 w-75 h-50'>
+    {/* // <div className='container'>
+    //   {/* <Paper elevation={3} className='calendar-paper demo-app'> 
+  <div className='m-2 p-2 d-flex justify-content-center text-center align-items-center'> */}
+  <div className='m-2 p-2 d-flex justify-content-between text-center align-items-center'>
         {isTeacher && (
-          <Button variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>)}
-          <Button variant="contained" color="primary" onClick={handleSwitchToMonthView}>Month View</Button>
+          <Button className='mx-3' variant="contained" color="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>)}
+          <Button className='mx-3' variant="contained" color="primary" onClick={handleSwitchToMonthView}>Month View</Button>
+        </div>
         </div>
         <FullCalendar
           key={calendarKey} // Add key prop to force re-render

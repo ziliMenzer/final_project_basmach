@@ -39,7 +39,7 @@ export default function EditStudent(props) {
             number_of_lessons: numberOfLessons,
             debt: debt
         };
-        console.log(updatedStudent);
+        // console.log(updatedStudent);
         onUpdate(updatedStudent);
     };
     const onUpdate = async (updatedStudent) => {
@@ -76,7 +76,7 @@ export default function EditStudent(props) {
                         <li>
 
                             <Form.Group controlId="traffic_signs">
-                                <Form.Label>Traffic Signs:</Form.Label>
+                                <Form.Label>תמרורים:</Form.Label>
                                 <Form.Control
                                     type="number"
                                     defaultValue={trafficSigns}
@@ -180,10 +180,10 @@ export default function EditStudent(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        Close
+                        סגירה
                     </Button>
                     <Button variant="primary" type="submit">
-                        Update
+                        עדכון
                     </Button>
                 </Modal.Footer>
             </Form >

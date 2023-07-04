@@ -52,9 +52,10 @@ const RegisterTeacher = () => {
                 first_name: _dataBody.first_name, last_name: _dataBody.last_name,
                 email: _dataBody.email, phone: _dataBody.phone, address: _dataBody.address, password: _dataBody.password, role: "user"
             }
-            const { data } = await doApiMethodSignUpLogin(url, "POST", user)
+            const { data } = await doApiMethodSignUpLogin(url, "POST", user);
+
             const teacher = {
-                user_id: user._id,
+                user_id: data._id,
                 sex: _dataBody.sex,
                 payment_per_lesson: _dataBody.payment_per_lesson,
                 license_type: _dataBody.license_type
@@ -62,7 +63,7 @@ const RegisterTeacher = () => {
             console.log(teacher)
             const url2 = API_URL + '/teachers/';
             const { data2 } = await doApiMethod(url2, "POST", teacher);
-            nav("/waitForCfirmation")
+            nav("/confirmation")
         } catch (err) {
             alert(err.response.data.msg || err.response.data[0].message)
             setIsSubmitted(false);

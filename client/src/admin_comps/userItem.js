@@ -25,13 +25,13 @@ export default function UserItem(props) {
     let url = API_URL + "/users/changeRole/" + item._id;
     try {
       let resp = await doApiMethodTokenNotStringify(url, "PATCH", bodyData)
-      console.log(resp.data)
+      // console.log(resp.data)
       if (resp.data) {
         props.doApi()
       }
     }
     catch (err) {
-      console.log(err.response);
+      // console.log(err.response);
       alert("התרחשה שגיאה או שינוי לא חוקי של משתמש");
     }
   }

@@ -98,7 +98,7 @@ export default function Login() {
 			<div className="overlay-panel overlay-right w-100">
 				<h1>שלום, חבר!</h1>
 				<p>הזן את פרטיך האישיים והתחיל איתנו את המסע</p>
-				<button className="ghost button-login" id="signUp">הירשם</button>
+				<button className="ghost button-login" id="signUp" onClick={()=>nav('/routeRegister')}>הירשם</button>
 			</div>
 	</div>
 </div>
