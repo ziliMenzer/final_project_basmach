@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from "../context/userProvider"
 import { API_URL, doApiMethodTokenNotStringify, doApiTokenGet } from '../services/apiService';
 import StudentItem from './studentItem';
+import "./allStudents.css";
 
 export default function AllStudents() {
   const { myStudents, setMyStudents } = useContext(AppContext);

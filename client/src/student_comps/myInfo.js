@@ -104,7 +104,7 @@ export default function MyInfo() {
                             <div className="row g-0">
                                 <div className="cl1 col-md-4 gradient-custom text-center text-white">
 
-                                    <h5 className='mt-0'>{user.first_name + " " + user.last_name}</h5>
+                                    <h5 className='mt-5'>{user.first_name + " " + user.last_name}</h5>
                                     <img src={user.profile_image}
                                         alt="profile image" className="rounded-circle shadow-4-strong mx-auto w-75 h-50" />
                                 </div>

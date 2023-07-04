@@ -5,8 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import "../Assets/UserSection/Styles/style.css";
-import Logo from "../Assets/UserSection/Images/CompagnyLogo.png";
+// import "../Assets/UserSection/Styles/style.css";
+import Logo from "../Assets/Main/icons/logo.png";
 import "./headerStudent.css";
 import { link } from "joi";
 

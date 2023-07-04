@@ -1,10 +1,12 @@
-import React from 'react'
 import Header from '../layout/header'
+import { AppContext } from '../context/userProvider';
+import React, { useContext } from 'react';
 
 export default function Home() {
   return (
     <div>
-      <Header/>
+        <Header/>
+      
       <div className='container text-center'>
         home
       </div>

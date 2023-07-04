@@ -54,7 +54,7 @@ export default function AppRoutes() {
                 }}>
                     <Header/>
                     <Routes>
-                        <Route index element={<Login />} />
+                        <Route index path="/" element={<Login />} />
                         {/* <Route path="/login" element={<Login />} /> */}
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/calendar" element={<Calendar />} />

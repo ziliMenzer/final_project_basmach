@@ -1,8 +1,7 @@
-import axios from 'axios';
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext} from 'react'
 import { useForm } from 'react-hook-form'
 import {useNavigate } from 'react-router-dom';
-import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { Helmet } from 'react-helmet';
 import { ThreeDots } from 'react-loader-spinner'
 import jwt_decode from 'jwt-decode';
 import { doApiMethodSignUpLogin, doApiGet, doApiTokenGet, API_URL, TOKEN_NAME } from '../services/apiService';
@@ -15,12 +14,10 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false)
   const nav = useNavigate();
-
   const onSubForm = (bodyData) => {
     console.log(bodyData);
     doApi(bodyData);
   }
-
 
   const doApi = async (_dataBody) => {
     try {
@@ -59,6 +56,7 @@ export default function Login() {
           nav("/usersList");
         }
       }
+      
     }
     catch (err) {
       setIsSubmitted(false);
@@ -72,45 +70,36 @@ export default function Login() {
   })
 
   let passwordRef = register("password", { required: true, minLength: 3 });
-
   return (
-    <div className='container'>
-      <h1 className='text-center'>Log in please</h1>
-      <form onSubmit={handleSubmit(onSubForm)} className='col-md-6 p-3 shadow mx-auto'>
-        <label>Email:</label>
-        <input {...emailRef} type="text" className='form-control' />
+<div className="container container1 my-5" id="container">
+<Helmet>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      </Helmet>
+	<div className="form-container sign-in-container">
+		<form onSubmit={handleSubmit(onSubForm)}>
+			<h1>התחברות</h1>
+			<div className="social-container">
+				<a href="#" className="social"><i className="fa fa-facebook-f"></i></a>
+				<a href="#" className="social"><i className="fa fa-google"></i></a>
+				<a href="#" className="social"><i className="fa fa-linkedin"></i></a>
+			</div>
+			<span>או השתמש בחשבון שלך</span>
+			<input {...emailRef} type="text" className='form-control' />
         {errors.email && <div className="text-danger">Enter valid email</div>}
-
-        <label>Password:</label>
-        <input {...passwordRef} type="text" className='form-control' />
+        <input {...passwordRef} type="password" className='form-control' />
         {errors.password && <div className="text-danger">Enter min 3 charts password</div>}
-        <div>
-          {!isSubmitted ?
-            <button
-              type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-              </span>
-              Log in
-            </button>
-            :
-            <ThreeDots
-              height="80"
-              width="80"
-              radius="9"
-              color="blue"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass="flex justify-center"
-              visible={true}
-            />
-
-          }
-
-        </div>
-      </form>
-    </div>
+			<a href="#">שכחת סיסמה?</a>
+			<button type="submit">התחבר</button>
+		</form>
+	</div>
+	<div className="overlay-container">
+			<div className="overlay-panel overlay-right w-100">
+				<h1>שלום, חבר!</h1>
+				<p>הזן את פרטיך האישיים והתחיל איתנו את המסע</p>
+				<button className="ghost" id="signUp">הירשם</button>
+			</div>
+	</div>
+</div>
+   
   )
 }

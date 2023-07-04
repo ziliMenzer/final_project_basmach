@@ -7,7 +7,6 @@ import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
 import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
 import { AppContext } from '../context/userProvider';
-import HeaderStudent from '../layout/headerStudent';
 import "./calendar.css"
 
 const Calendar = () => {
@@ -94,10 +93,16 @@ const Calendar = () => {
     setShowEditEventModal(false);
     setShowAddEventModal(false);
   };
-
+  // <div className=' container col-7 c1 p-3 my-5'>
+    // <div  className='container c2 bg-light my-5 p-2 w-75 h-50'>
   return (
-    <div>
-    <div  className='container my-5'>
+    // <div style={{ backgroundColor: "#f4f5f7" }}>
+    //   <div className='container-fluid c3 h-50 ' >
+    //     <h2 className='display-6 py-5 me-5'>השיעורים שלי</h2>
+    //   </div>
+    //   <div className='container c2 w-75 py-5 bg-light' >
+   <div className=' container col-7 c1 p-3 my-5'>
+    <div  className='container c2 bg-light my-5 p-2 w-75 h-50'>
       {/* <Paper elevation={3} className='calendar-paper'> */}
         <FullCalendar 
           id='calendar'
