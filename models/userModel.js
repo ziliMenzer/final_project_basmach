@@ -36,7 +36,6 @@ exports.userValid = (_reqBody) => {
     phone: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
     address: Joi.string().min(5).max(100).required(),
     password: Joi.string()
-      .required()
       .min(8)
       .max(20),
     profile_image: Joi.string().allow(null, ""),

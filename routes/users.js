@@ -82,16 +82,16 @@ router.put("/:idEdit", auth, async (req, res) => {
     }
     try {
         let editId = req.params.idEdit;
-        let data;
-        if (req.body.password) {
-            req.body.password = await bcrypt.hash(req.body.password, 10);
-        }
+        // let data;
+        // if (req.body.password) {
+        //     req.body.password = await bcrypt.hash(req.body.password, 10);
+        // }
         if (req.tokenData.role == "admin") {
             data = await UserModel.updateOne({ _id: editId }, req.body);
 
         }
         else {
-            data = await UserModel.updateOne({ _id: editId, userId: req.tokenData._id }, req.body);
+            data = await UserModel.updateOne({ _id: editId, _id: req.tokenData._id }, req.body);
         }
         res.json(data);
     }

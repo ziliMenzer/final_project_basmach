@@ -2,17 +2,28 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from "../context/userProvider"
 import { API_URL, doApiMethodTokenNotStringify, doApiTokenGet } from '../services/apiService';
 import StudentItem from './studentItem';
+import TabsNav from './tabsNav';
 
 export default function AllStudents() {
+  const [activeTab, setActiveTab] = useState('/allStudents');
   const { myStudents, setMyStudents } = useContext(AppContext);
   const [student, setStudent] = useState({});
+  const [notActive, setNotActive] = useState([]);
+  const [active, setActive] = useState([]);
+  const [waitingStudent, setWaitingStudent] = useState([]);
 
   useEffect(() => {
-    console.log("update use effect");
     doApi();
     console.log(myStudents);
   }, [setMyStudents]);
-
+  useEffect(() => {
+    setWaitingStudent(myStudents.filter(item => item.status === "waiting"));
+    setActive(myStudents.filter(item => item.status === "active"));
+    setNotActive(myStudents.filter(item => item.status === "un-active"));
+    console.log("'waiting", waitingStudent);
+    console.log("'active", active);
+    console.log("'un-active", notActive);
+  }, [myStudents])
   const doApi = async () => {
     let url = API_URL + '/students';
     try {
@@ -55,17 +66,35 @@ export default function AllStudents() {
     } catch (err) {
       console.log(err);
     }
+
   }
   return (
     <div className='container'>
+      <TabsNav setActiveTab={setActiveTab}></TabsNav>
       <h2>Students List:</h2>
       <div className='row g-2'>
-        {myStudents.map(item => {
-          return (
-            <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
-          );
-        })}
-        {myStudents.length < 1 && <h2>Loading....</h2>}
+        {activeTab === "/allStudents" &&
+          active.map(item => {
+            return (
+              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+            );
+          }
+          )}
+        {activeTab === "/waiting" &&
+          waitingStudent.map(item => {
+            return (
+              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+            );
+          }
+          )}
+        {activeTab === "/un-active" &&
+          notActive.map(item => {
+            return (
+              <StudentItem key={item._id} item={item} onStatusChange={onStatusChange} />
+            );
+          }
+          )}
+        {myStudents.length < 1 && <h2>No Students Yet!</h2>}
       </div>
     </div>
   );

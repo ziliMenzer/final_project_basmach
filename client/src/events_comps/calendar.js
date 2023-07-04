@@ -5,8 +5,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { Paper, Button } from '@mui/material';
 import EditEventModal from './editEvent';
 import AddEventModal from './addEvent';
-import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
-import { AppContext } from '../context/userProvider';
+import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME, doApiMethodToken } from '../services/apiService';
+import UserProvider, { AppContext, UserState } from '../context/userProvider';
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
@@ -65,7 +65,7 @@ const Calendar = () => {
   const handleEventDelete = async (_id) => {
     try {
       let url = API_URL + `/events/${_id}`;
-      await doApiMethodTokenNotStringify(url, "DELETE");
+      await doApiMethodToken(url, "DELETE");
       setEvents(events.filter((event) => event.id !== _id));
     }
     catch (err) {
@@ -95,9 +95,8 @@ const Calendar = () => {
 
   return (
     <div  className='container'>
-      <Paper elevation={3} className='calendar-paper'>
+      <Paper elevation={3} className='calendar-paper demo-app'>
         <FullCalendar 
-          id='calendar'
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
           events={events}

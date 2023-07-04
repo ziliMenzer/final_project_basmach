@@ -87,7 +87,7 @@ router.put("/:idEdit", async (req, res) => {
     res.status(500).json({ msg: "err", err })
   }
 });
-router.delete("/:idDel", async (req, res) => {
+router.delete("/:idDel",auth, async (req, res) => {
   try {
     let delId = req.params.idDel;
     if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
