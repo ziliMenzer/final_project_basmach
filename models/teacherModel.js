@@ -24,8 +24,8 @@ exports.createToken = (user_id, user_role) => {
 exports.teacherValid = (_reqBody) => {
     let joiSchema = Joi.object({
         user_id: Joi.string().min(2).max(99).required(),
-        license_type: Joi.string().min(2).max(99).email().required(),
-        rating: Joi.string().min(2).max(99).allow(null, ""),
+        license_type: Joi.string().min(2).max(99).required(),
+        rating: Joi.number().min(0).max(99).allow(null, ""),
         payment_per_lesson: Joi.number().min(100).max(300).required(),
         sex: Joi.string().min(3).max(10).allow(null, "")
     });

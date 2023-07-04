@@ -1,80 +1,136 @@
-import React, { useEffect, useState } from 'react';
-import { GoogleLogin } from 'react-google-login';
-export default function Calendar() {
-  const [accessToken, setAccessToken] = useState('');
+import React, { useState, useEffect, useContext } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { Paper, Button } from '@mui/material';
+import EditEventModal from './editEvent';
+import AddEventModal from './addEvent';
+import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME } from '../services/apiService';
+import { AppContext } from '../context/userProvider';
+import HeaderStudent from '../layout/headerStudent';
+import "./calendar.css"
+
+const Calendar = () => {
   const [events, setEvents] = useState([]);
-
-  const handleLogin = (response) => {
-    // Extract the access token from the response
-    const { accessToken } = response;
-    setAccessToken(accessToken);
-  };
-
-  const fetchEvents = async () => {
-    try {
-      // Send a GET request to your Node.js backend to fetch the user's events
-      const response = await fetch('/api/events', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      // Handle the response from the backend
-      if (response.ok) {
-        const data = await response.json();
-        setEvents(data);
-      } else {
-        console.error('Failed to fetch events');
-      }
-    } catch (error) {
-      console.error('Error fetching events', error);
-    }
-  };
+  const [showEditEventModal, setShowEditEventModal] = useState(false);
+  const [showAddEventModal, setShowAddEventModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isTeacher, setIsTeacher] = useState(false);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
-    if (accessToken) {
-      fetchEvents();
+    if (user.role === "teacher") {
+      setIsTeacher(true);
     }
-  }, [accessToken]);
+    doApi();
+  }, []);
+
+  useEffect(() => {
+    doApi();
+  }, [selectedEvent]);
+
+  const doApi = async () => {
+    try {
+      let url = API_URL + `/events/${user.user_id}`;
+      const { data } = await doApiTokenGet(url);
+      setEvents(data);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEventClick = (info) => {
+    const event = info.event;
+    setSelectedEvent(event);
+    setShowEditEventModal(true);
+  };
+
+  const handleEventUpdate = async (updatedEvent, id) => {
+    try {
+      let url = API_URL + `/events/${id}`;
+      await doApiMethodTokenNotStringify(url, "PUT", updatedEvent);
+      const updatedEvents = [...events];
+      const eventIndex = updatedEvents.findIndex((event) => event.id === id);
+      if (eventIndex !== -1) {
+        updatedEvents[eventIndex] = updatedEvent;
+        setEvents(updatedEvents);
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+    setSelectedEvent(null);
+    setShowEditEventModal(false);
+  };
+
+  const handleEventDelete = async (_id) => {
+    try {
+      let url = API_URL + `/events/${_id}`;
+      await doApiMethodTokenNotStringify(url, "DELETE");
+      setEvents(events.filter((event) => event.id !== _id));
+    }
+    catch (err) {
+      console.log(err);
+    }
+    setSelectedEvent(null);
+    setShowEditEventModal(false);
+  };
+
+  const handleAddEvent = async (_newEvent) => {
+    try {
+      let url = API_URL + '/events/';
+      const { data } = await doApiMethodTokenNotStringify(url, "POST", _newEvent);
+      setEvents([...events, data]);
+    }
+    catch (err) {
+      console.log(err);
+    }
+    setShowAddEventModal(false);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedEvent(null);
+    setShowEditEventModal(false);
+    setShowAddEventModal(false);
+  };
 
   return (
     <div>
-      <h1>Calendar</h1>
-      {accessToken ? (
-        <div>
-          <button onClick={fetchEvents}>Refresh Events</button>
-          {events.length > 0 ? (
-            <div className="calendar">
-              {events.map((event) => (
-                <div key={event.id} className="event">
-                  <div className="event-title">{event.summary}</div>
-                  {event.attendees && event.attendees.length > 0 && (
-                    <div className="event-participants">
-                      Participants:{' '}
-                      {event.attendees.map((participant) => (
-                        <span key={participant.email}>
-                          {participant.email},{' '}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>No events to display.</p>
-          )}
-        </div>
-      ) : (
-        <GoogleLogin
-          clientId="YOUR_CLIENT_ID"
-          buttonText="Login with Google"
-          onSuccess={handleLogin}
-          onFailure={handleLogin}
-          cookiePolicy="single_host_origin"
+    <div  className='container my-5'>
+      {/* <Paper elevation={3} className='calendar-paper'> */}
+        <FullCalendar 
+          id='calendar'
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridWeek"
+          events={events}
+          eventClick={handleEventClick}
+          slotDuration="00:30:00"
+          slotMinTime="06:00:00"
         />
+
+        {selectedEvent && isTeacher && (
+          <EditEventModal
+            event={selectedEvent}
+            onUpdate={handleEventUpdate}
+            onDelete={handleEventDelete}
+            onClose={handleCloseModal}
+          />
+        )}
+      {/* </Paper> */}
+
+      {showAddEventModal && (
+        <AddEventModal onAdd={handleAddEvent} onClose={handleCloseModal} />
       )}
+
+      {isTeacher && (
+        <div className=' m-2 p-2 d-flex justify-content-center text-center align-items-center'>
+          <button variant="contained" className='btn-add rounded-pill py-2 px-3' onClick={() => setShowAddEventModal(true)}>הוסף אירוע</button>
+        </div>
+      )}
+    </div>
     </div>
   );
 };
+
+export default Calendar;

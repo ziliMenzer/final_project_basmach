@@ -1,36 +1,71 @@
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../context/userProvider';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
-
+import Logo from "../Assets/Main/icons/logo.png";
 export default function Header() {
-    return (
-        <Navbar expand="lg" className="bg-dark text-light">
+     const { user } = useContext(AppContext);
+     return (
+         <Navbar expand="lg" className="bg-dark navbar-dark text-light">
             <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav bg-light">
-                    <Nav className="me-auto">
-                        <Link to="/">Home</Link>
-                       <Link to="/login">login</Link>
-                        <Link to="/allTeachersList">AllTeachersList</Link>
-                        <Link to="/something">pw</Link>
-                        <Link to="/logout">logout</Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Separated link
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    );
+             <Navbar.Brand href="/"><img src={Logo} alt="logo" id="logo" style={{height:"60px",width:"60px"}}></img></Navbar.Brand>
+                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                 <Navbar.Collapse id="basic-navbar-nav">
+                     <Nav className="me-auto">
+                         <div className="collapse navbar-collapse" id="navbarNav">
+                             <ul className="navbar-nav">
+                                 {user && user.role === 'admin' && (
+                                     <li className="nav-item">
+                                         <Link className="nav-link" to="/usersList">Admin Page</Link>
+                                    </li>
+                                )}
+                                 {user && user.role === 'teacher' && (
+                                    <li className="nav-item">
+                                         <Link className="nav-link" to="/allStudents">בית</Link>
+                                    </li>
+                                 )}
+                                 {user && user.role === 'teacher' && (
+                                    <li className="nav-item">
+                                     <Link className="nav-link" to="/calendar">שיעורים</Link>
+                                    </li>
+                                 )}
+                                 {user && user.role === 'teacher' && (
+                                    <li className="nav-item">
+                                     <Link className="nav-link" to="/editTeacher">הפרטים שלי</Link>
+                                    </li>
+                                 )}
+                                {user && user.role === 'teacher' && (
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/logout">יציאה</Link>
+                                    </li>
+                                 )}
+                                 {user && user.role === 'student' && (
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/progress">בית</Link>
+                                    </li>
+                                 )}
+                                 {user && user.role === 'student' && (
+                                     <li className="nav-item">
+                                         <Link className="nav-link" to="/calendar">שיעורים</Link>
+                                     </li>
+                                 )}
+                                {user && user.role === 'student' && (
+                                 <li className="nav-item">
+                                     <Link className="nav-link" to="/myInfo">הפרטים שלי</Link>
+                                 </li>
+                                 )}
+                                {user && user.role === 'student' && (
+                                 <li className="nav-item">
+                                     <Link className="nav-link" to="/allTeachersList">רשימת מורים</Link>
+                                    </li>
+                                 )}
+                             </ul>
+                         </div>
+                     </Nav>
+                 </Navbar.Collapse>
+             </Container>
+         </Navbar>
+     );
 }

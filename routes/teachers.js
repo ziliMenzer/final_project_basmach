@@ -21,11 +21,22 @@ router.get("/", async (req, res) => {
   }
 })
 //get all of teacher info
-router.get("/teacherInfo/:id", async (req, res) => {
-  let teacher_id = req.params.id;
+router.get("/myInfo",auth, async (req, res) => {
   try {
-    let userData = await UserModel.findOne({ _id: teacher_id });
-    let teacherData = await TeacherModel.findOne({ user_id: teacher_id });
+    let userData = await UserModel.findOne({ _id: req.tokenData._id });
+    let teacherData = await TeacherModel.findOne({ user_id: req.tokenData._id });
+    const fullTeacher = {...userData.toObject(),...teacherData.toObject()};
+    res.json(fullTeacher);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Error", err });
+  }
+});
+router.get("/teacherInfo/:id", async (req, res) => {
+  let id= req.params.id;
+  try {
+    let userData = await UserModel.findOne({ _id: id });
+    let teacherData = await TeacherModel.findOne({ user_id: id });
     const fullTeacher = {...userData.toObject(),...teacherData.toObject()};
     res.json(fullTeacher);
   } catch (err) {
@@ -34,27 +45,27 @@ router.get("/teacherInfo/:id", async (req, res) => {
   }
 });
 // Display teacher Inforamation from the student
-router.get("/teacherInfo/:teacherId", async (req, res) => {
-  let teacherId = req.params.id;
+// router.get("/teacherInfo/:teacherId", async (req, res) => {
+//   let teacherId = req.params.id;
 
-  try {
-    const teacher = await TeacherModel.findOne({ _id: teacherId })
-      .select('name subject') // Specify the allowed fields
+//   try {
+//     const teacher = await TeacherModel.findOne({ _id: teacherId })
+//       // .select('name subject') // Specify the allowed fields
 
-    if (!teacher) {
-      // Teacher not found
-      res.status(404).json({ error: 'Teacher not found' });
-    }
+//     if (!teacher) {
+//       // Teacher not found
+//       res.status(404).json({ error: 'Teacher not found' });
+//     }
 
-    // Return the allowed fields
-    res.json({ name: teacher.name, subject: teacher.subject, rating: teacher.rating });
-  }
-  catch (err) {
-    // Handle the error
-    console.log(err);
-    res.status(500).json({ msg: 'Internal server error', err });
-  }
-});
+//     // Return the allowed fields
+//     res.json(teacher);
+//   }
+//   catch (err) {
+//     // Handle the error
+//     console.log(err);
+//     res.status(500).json({ msg: 'Internal server error', err });
+//   }
+// });
 
 // Display teacher Inforamation from the teacher
 router.get("/myInfo/:teacherId", auth, async (req, res) => {
@@ -97,7 +108,7 @@ router.post("/", authAdmin, async (req, res) => {
   }
   try {
     let teacher = new TeacherModel(req.body);
-    teacher.userId = req.tokenData._id;
+    // teacher.user_id = req.tokenData._id;
     await teacher.save();
     res.status(201).json(teacher)
   }

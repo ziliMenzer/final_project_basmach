@@ -1,51 +1,82 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
-import StudentHome from './student_comps/studentHome'
-import Header from './layout/header'
+// import StudentHome from './student_comps/studentHome'
 import Logout from './general_comps/logout'
+import Calendar from './events_comps/calendar'
+import AddEvent from './events_comps/addEvent'
+import Header from './layout/header'
+import UsersList from './admin_comps/userList'
+import AllStudents from './teacher_comps/allStudents'
+import FilterTeachers from './student_comps/filterTeachers'
+import Progress from './student_comps/progress'
+// import Header from './general_comps/navbar'
+import MyInfo from './student_comps/myInfo'
 import Footer from './layout/footer'
+import EditTeacher from './teacher_comps/editTeacher'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
-    const updateUserDetails = (updatedDetails) => {
-        setUser((prevUser) => ({ ...prevUser, ...updatedDetails }));
-      };
+    const [myStudents, setMyStudents] = useState([]);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    // Update local storage whenever user data changes
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('user');
+        }
+    }, [user]);
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
 
-            <AppContext.Provider value={{
-                user,setUser,
-                updateUserDetails
-            }}>
-                <Header/>
+        //     <AppContext.Provider value={{
+        //         user,setUser,
+        //         myStudents,setMyStudents
+        //     }}>
 
-                {/* <header className='p-2 container bg-warning'>
-                    <Link to="/">Home</Link>
-                    <Link to="/login">login</Link>
-                    <Link to="/allTeachersList">AllTeachersList</Link>
-                    <Link to="/pixa/cats">Pixa</Link>
-                    <Link to="/cars">Cars</Link>
-                    <Link to="/casino">Casino</Link>
-                </header> */}
-                {/* outlet */}
-                <Routes>
-                    <Route index element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/logout" element={<Logout />} />
-                    <Route path='allTeachersList' element={<AllTeachersList />} />
-                    <Route path='studentHome' element={<StudentHome/>}/>
-                    {/* <Route path="/counter" element={<Counter />} />
+
+        <div>
+
+            <BrowserRouter>
+                <AppContext.Provider value={{
+                    user, setUser,
+                    myStudents, setMyStudents
+                }}>
+                    <Header/>
+                    <Routes>
+                        <Route index element={<Login />} />
+                        {/* <Route path="/login" element={<Login />} /> */}
+                        <Route path="/logout" element={<Logout />} />
+                        <Route path="/calendar" element={<Calendar />} />
+                        <Route path='allTeachersList' element={<AllTeachersList />} />
+                        <Route path='addEvent' element={<AddEvent />} />
+                        <Route path='/usersList' element={<UsersList />} />
+                        <Route path='/allStudents' element={<AllStudents />} />
+                        <Route path='/filterTeachers' element={<FilterTeachers />} />
+                        <Route path='/progress' element={<Progress />} />
+                        <Route path='/myInfo' element={<MyInfo />} />
+                        <Route path='/editTeacher' element={<EditTeacher />} />
+                        {/* <Route path="/counter" element={<Counter />} />
                     <Route path="/pixa/:searchQ" element={<AppPixa />} />
                     <Route path="/casino" element={<AppCasino />} />
                     <Route path="/cars" element={<CarsList />} /> */}
-                </Routes>
-                {/* outlet */}
-                    <Footer></Footer>
-            </AppContext.Provider>
-        </BrowserRouter>
+                    </Routes>
+                    <Footer/>
+                </AppContext.Provider>
+            </BrowserRouter>
+        </div>
+        // <footer className='p-2 container-fluid bg-danger'>footer</footer>
+
+        // </BrowserRouter>
     )
 }

@@ -15,7 +15,7 @@ router.get("/getAllUsers", authAdmin, async (req, res) => {
     }
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/", async (req, res) => {
     let valdiateBody = userValid(req.body);
     if (valdiateBody.error) {
         return res.status(400).json(valdiateBody.error.details)
@@ -44,12 +44,12 @@ router.post("/login", async (req, res) => {
         if (!user) {
             return res.status(401).json({ msg: "Password or email is worng ,code:1" })
         }
-        let authPassword = await bcrypt.compare(req.body.password, user.password);
+        let authPassword = bcrypt.compare(req.body.password, user.password);
         if (!authPassword) {
             return res.status(401).json({ msg: "Password or email is worng ,code:2" });
         }
         let token = createToken(user._id, user.role);
-        res.json({ token});
+        res.json({ token });
     }
     catch (err) {
         console.log(err)
@@ -114,6 +114,7 @@ router.put("/:idEdit", auth, async (req, res) => {
         // }
         if (req.tokenData.role == "admin") {
             data = await UserModel.updateOne({ _id: editId }, req.body);
+
         }
         else {
             data = await UserModel.updateOne({ _id: editId , _id: req.tokenData._id },req.body);
@@ -136,4 +137,46 @@ router.get("/checkRole:user_id", async (req, res) => {
         res.status(500).json({ msg: "err", err });
     }
 });
+router.patch("/changeRole/:userID",authAdmin, async(req,res) => {
+    if(!req.body.role){
+      return res.status(400).json({msg:"Need to send role in body"});
+    }
+    
+    try{
+      let userID = req.params.userID
+      // לא מאפשר ליוזר אדמין להפוך למשהו אחר/ כי הוא הסופר אדמין
+    //   if(userID == "649d5b98304a954a62f28132"){
+    //     return res.status(401).json({msg:"You cant change superadmin to user"});
+    
+    //   }
+      let data = await UserModel.updateOne({_id:userID},{role:req.body.role})
+      res.json(data);
+    }
+    catch(err){
+      console.log(err)
+      res.status(500).json({msg:"err",err})
+    }
+  })
+  
+  // מאפשר לגרום למשתמש לא יכולת להוסיף מוצרים חדשים/ סוג של באן שלא מוחק את המשתמש
+  router.patch("/changeActive/:userID",authAdmin, async(req,res) => {
+    if(!req.body.active && req.body.active != false){
+      return res.status(400).json({msg:"Need to send active in body"});
+    }
+    
+    try{
+      let userID = req.params.userID
+      // לא מאפשר ליוזר אדמין להפוך למשהו אחר/ כי הוא הסופר אדמין
+    //   if(userID == "649d5b98304a954a62f28132"){
+    //     return res.status(401).json({msg:"You cant change superadmin to user"});
+    
+    //   }
+      let data = await UserModel.updateOne({_id:userID},{active:req.body.active})
+      res.json(data);
+    }
+    catch(err){
+      console.log(err)
+      res.status(500).json({msg:"err",err})
+    }
+  })
 module.exports = router;

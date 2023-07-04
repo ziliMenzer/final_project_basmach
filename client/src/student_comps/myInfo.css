@@ -1,0 +1,36 @@
+.cl1{
+    border-top-right-radius: .5rem; 
+    border-bottom-right-radius: .5rem;
+    background: hsla(43, 100%, 71%, 1);
+
+    background: linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    background: -moz-linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    background: -webkit-linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFD66B", endColorstr="#FFA386", GradientType=1 );
+}
+.cl1 img{
+    /* height: 90%;  */
+    /* width: 100%; */
+    /* border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden; */
+}
+.label{
+    font-weight: 500;
+}
+.btn-form{
+    color: white;
+    border:none;
+    background: hsla(43, 100%, 71%, 1);
+
+    background: linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    background: -moz-linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    background: -webkit-linear-gradient(135deg, hsla(43, 100%, 71%, 1) 0%, hsla(14, 100%, 76%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFD66B", endColorstr="#FFA386", GradientType=1 );
+}

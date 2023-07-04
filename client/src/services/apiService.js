@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "http://localhost:3000"
+export const API_URL = "http://localhost:3001"
 // export const API_URL = "https://monkeys.co.il"
 export const TOKEN_NAME = "DRIVING-SECRET"
 
@@ -63,7 +63,7 @@ export const doApiMethod = async (_url, _method, _body) => {
     throw err;
   }
 }
-export const doApiMethodFillDetales = async (_url, _method, _body = {}) => {
+export const doApiMethodFillDetailes = async (_url, _method, _body = {}) => {
   try {
     let resp = await axios({
       method: _method,
@@ -113,7 +113,7 @@ export const doApiMethodRefresh = async (_url) => {
   }
 }
 
-export const doApiMethodTokenNotStringify = async (_url, _method, _body = {}) => {
+export const doApiMethodTokenNotStringify = async (_url, _method, _body) => {
   try {
     let resp = await axios({
       method: _method,

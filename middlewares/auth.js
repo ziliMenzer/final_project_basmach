@@ -16,7 +16,7 @@ exports.auth = async (req, res, next) => {
   }
 }
 
-exports.authAdmin = (req, res) => {
+exports.authAdmin = (req, res,next) => {
   let token = req.header("x-api-key");
   if (!token) {
     return res.status(401).json({ msg: "You need to send token to access this endpoint" });

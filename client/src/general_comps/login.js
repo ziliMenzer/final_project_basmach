@@ -1,42 +1,41 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { ThreeDots } from 'react-loader-spinner'
 import jwt_decode from 'jwt-decode';
 import { doApiMethodSignUpLogin, doApiGet, doApiTokenGet, API_URL, TOKEN_NAME } from '../services/apiService';
 import "./login.css";
 import { AppContext } from "../context/userProvider"
+
+
 export default function Login() {
   const { user, setUser } = useContext(AppContext);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false)
-
   const nav = useNavigate();
 
   const onSubForm = (bodyData) => {
     console.log(bodyData);
     doApi(bodyData);
   }
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user])
+
 
   const doApi = async (_dataBody) => {
     try {
       let url = API_URL + '/users/login';
       const { data } = await doApiMethodSignUpLogin(url, "POST", _dataBody);
-      console.log(data);
-
+      console.log(data.token);
       if (data.token) {
         localStorage.setItem(TOKEN_NAME, data.token);
         const decodedToken = jwt_decode(data.token);
         const userRole = decodedToken.role;
-        console.log(userRole)
+        console.log(decodedToken._id);
+        //console.log(userRole)
         if (userRole === "teacher") {
-          let url = API_URL + `/teachers/teacherInfo/${data.token._id}`;
-          let teacher = await doApiGet(url);
+          let url = API_URL + `/teachers/myInfo`;
+          let teacher = await doApiTokenGet(url);
           console.log("teacher", teacher.data);
           setUser(teacher.data);
           nav("/allStudents");
@@ -52,11 +51,12 @@ export default function Login() {
             nav("/allTeachersList");
           }
           else {
-            nav("/studentHome")
+            nav("/progress")
+
           }
         }
         else if (userRole === "admin") {
-          nav("/userList");
+          nav("/usersList");
         }
       }
     }
