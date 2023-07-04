@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TeacherItem from './teacherItem';
 import { doApiGet, API_URL, TOKEN_NAME } from '../services/apiService';
+import './teacherItem.css'
 
 export default function AllTeachersList() {
     const [teachersList, setTeachersList] = useState([]);
@@ -8,20 +9,6 @@ export default function AllTeachersList() {
         doApi()
     }, []);
 
-    // const doApi = async () => {
-    //     try {
-
-    //         const {data}  = await doApiGet(url);
-    //         data.map(async item=>{
-    //             url = API_URL + `/teachers/teacherInfo/${item.user_id}`;
-    //             let teacher = await doApiGet(url);
-    //             setTeachersList(teachersList=>[...teachersList,teacher.data])
-    //         });
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //      }    
-    // }
     const doApi = async () => {
         let url = API_URL + '/teachers/';
         try {
@@ -43,9 +30,9 @@ export default function AllTeachersList() {
     };
     return (
         <div className='container'>
-            <button>סינון מורים</button>
-            <h2>Teachers List:</h2>
-            <div className='row g-2'>
+            <button className='btn-teacher py-2 px-5 my-2'>סינון מורים</button>
+            <h4>בחר את מורה הנהיגה שלך:</h4>
+            <div className='g-2'>
                 {teachersList.map(item => {
                     return (
                         <TeacherItem key={item._id} item={item} />

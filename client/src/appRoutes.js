@@ -4,14 +4,13 @@ import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
-import StudentHome from './student_comps/studentHome'
 import Logout from './general_comps/logout'
 import RouteRegister from './general_comps/routeRegister'
 import SignUp from './student_comps/register'
-import RegisterUser from './teacher_comps/registerUser'
-import SignUpTeacher from './teacher_comps/resgisterTeacher'
 import Header from './layout/header'
 import Footer from './layout/footer'
+import WaitForConfirmation from './student_comps/waitForConfirmation'
+import RegisterTeacher from './teacher_comps/registerTeacher'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
@@ -38,11 +37,11 @@ export default function AppRoutes() {
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/logout" element={<Logout />} />
-                    <Route path='allTeachersList' element={<AllTeachersList />} />
+                    <Route path='/allTeachersList' element={<AllTeachersList />} />
                     <Route path="/routeRegister" element={<RouteRegister />} />
                     <Route path="/register" element={<SignUp />} />
-                    <Route path="/registerUser" element={<RegisterUser />} />
-                    <Route path="/registerTeacher" element={<SignUpTeacher />} />
+                    <Route path="/registerTeacher" element={<RegisterTeacher />} />
+                    <Route path="/waitForCfirmation" element={<WaitForConfirmation />} />
                 </Routes>
                 <Footer />
             </AppContext.Provider>
