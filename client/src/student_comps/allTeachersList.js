@@ -62,72 +62,75 @@ export default function AllTeachersList() {
     <div className='container'>
       <h2>Teachers List:</h2>
 
-      <Form>
-        <Row>
-          <Col md={4}>
-            <Form.Group controlId='paymentRange'>
-              <Form.Label>Payment Range</Form.Label>
-              <input
-                type='range'
-                min={0}
-                max={100}
-                value={paymentRange.max}
-                onChange={(e) =>
-                  setPaymentRange({ ...paymentRange, max: e.target.value })
-                }
-              />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group controlId='sexFilter'>
-              <Form.Label>Sex Filter</Form.Label>
-              <div>
-                <Form.Check
-                  inline
-                  type='radio'
-                  label='Male'
-                  name='sex'
-                  value='male'
-                  checked={sex === 'male'}
-                  onChange={() => setSex('male')}
+      <div className='filter-strip'>
+        <Form>
+          <Row>
+            <Col md={4}>
+              <Form.Group controlId='paymentRange'>
+                <Form.Label>Payment Range</Form.Label>
+                <input
+                  type='range'
+                  min={0}
+                  max={100}
+                  value={paymentRange.max}
+                  onChange={(e) =>
+                    setPaymentRange({ ...paymentRange, max: e.target.value })
+                  }
                 />
-                <Form.Check
-                  inline
-                  type='radio'
-                  label='Female'
-                  name='sex'
-                  value='female'
-                  checked={sex === 'female'}
-                  onChange={() => setSex('female')}
-                />
-              </div>
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group controlId='addressFilter'>
-              <Form.Label>Address Filter</Form.Label>
-              <Form.Control
-                as='select'
-                multiple
-                value={selectedAddresses}
-                onChange={(e) =>
-                  setSelectedAddresses(
-                    Array.from(
-                      e.target.selectedOptions,
-                      (option) => option.value
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group controlId='sexFilter'>
+                <Form.Label>Sex Filter</Form.Label>
+                <div>
+                  <Form.Check
+                    inline
+                    type='radio'
+                    label='Male'
+                    name='sex'
+                    value='male'
+                    checked={sex === 'male'}
+                    onChange={() => setSex('male')}
+                  />
+                  <Form.Check
+                    inline
+                    type='radio'
+                    label='Female'
+                    name='sex'
+                    value='female'
+                    checked={sex === 'female'}
+                    onChange={() => setSex('female')}
+                  />
+                </div>
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group controlId='addressFilter'>
+                <Form.Label>Address Filter</Form.Label>
+                <Form.Control
+                  as='select'
+                  multiple
+                  size='lg'
+                  value={selectedAddresses}
+                  onChange={(e) =>
+                    setSelectedAddresses(
+                      Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value
+                      )
                     )
-                  )
-                }
-              >
-                <option value='address1'>Address 1</option>
-                <option value='address2'>Address 2</option>
-                <option value='address3'>Address 3</option>
-                {/* Add more address options */}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
+                  }
+                >
+                  <option value='address1'>Address 1</option>
+                  <option value='address2'>Address 2</option>
+                  <option value='address3'>Address 3</option>
+                  {/* Add more address options */}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
+      </div>
 
       <div className='row g-2'>
         {filterTeachers().map((item) => {

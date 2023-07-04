@@ -9,7 +9,7 @@ import AddEventModal from './addEvent';
 import { doApiTokenGet, doApiMethodTokenNotStringify, API_URL, TOKEN_NAME, doApiMethodToken } from '../services/apiService';
 import UserProvider, { AppContext, UserState } from '../context/userProvider';
 
-const Calendar = () => {
+export default function Calendar ()  {
   const [events, setEvents] = useState([]);
   const [showEditEventModal, setShowEditEventModal] = useState(false);
   const [showAddEventModal, setShowAddEventModal] = useState(false);
@@ -143,4 +143,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+;
