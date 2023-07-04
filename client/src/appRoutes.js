@@ -4,7 +4,7 @@ import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
-import StudentHome from './student_comps/studentHome'
+// import StudentHome from './student_comps/studentHome'
 import Logout from './general_comps/logout'
 import RouteRegister from './general_comps/routeRegister'
 import SignUp from './student_comps/register'
