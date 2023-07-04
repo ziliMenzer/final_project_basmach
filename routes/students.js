@@ -28,7 +28,8 @@ router.get("/studentInfo", auth, async (req, res) => {
     try {
         let userData = await UserModel.findOne({ _id: req.tokenData._id });
         let studentData = await StudentModel.findOne({ user_id: req.tokenData._id });
-
+        console.log(userData);
+        console.log(studentData);
         const fullStudent = { ...userData.toObject(), ...studentData.toObject() };
         res.json(fullStudent);
     } catch (err) {
@@ -56,14 +57,14 @@ router.post("/", async (req, res) => {
 
 //get student info
 // router.get("/myInfo", auth, async (req, res) => {
-//     try {
-//         let studentInfo = await StudentModel.findOne({ user_id: req.tokenData._id }, { password: 0 });
-//         res.json(studentInfo);
-//     }
-//     catch (err) {
-//         console.log(err)
-//         res.status(500).json({ msg: "err", err })
-//     }
+//     try {
+//         let studentInfo = await StudentModel.findOne({ user_id: req.tokenData._id }, { password: 0 });
+//         res.json(studentInfo);
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500).json({ msg: "err", err })
+//     }
 // });
 //get student info by admin
 router.get("/myInfo/:id", auth, async (req, res) => {
@@ -123,11 +124,14 @@ router.put("/:idEdit", auth, async (req, res) => {
     try {
         let editId = req.params.idEdit;
         let data;
-        if (req.tokenData.role == "admin") {
+        if (req.tokenData.role == "admin" || req.tokenData.role == "teacher") {
             data = await StudentModel.updateOne({ user_id: editId }, req.body);
         }
+        // else  if (req.tokenData.role == "teacher") {
+        //     data = await StudentModel.updateOne({ _id: editId ,teacher_id:req.tokenData._id}, req.body);
+        // }
         else {
-            data = await StudentModel.updateOne({ user_id: editId }, req.body);
+            data = await StudentModel.updateOne({ _id: editId, _id: req.tokenData._id }, req.body);
         }
         res.json(data);
     }
