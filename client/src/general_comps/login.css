@@ -53,7 +53,7 @@ a {
 	margin: 15px 0;
 }
 
-button {
+.button-login {
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
 	background-color: #FF4B2B;
@@ -79,7 +79,7 @@ button.ghost {
 	border-color: #FFFFFF;
 }
 
-form {
+.form-login {
 	background-color: #FFFFFF;
 	display: flex;
 	align-items: center;

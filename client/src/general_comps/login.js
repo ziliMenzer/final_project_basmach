@@ -76,7 +76,7 @@ export default function Login() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       </Helmet>
 	<div className="form-container sign-in-container">
-		<form onSubmit={handleSubmit(onSubForm)}>
+		<form className='form-login' onSubmit={handleSubmit(onSubForm)}>
 			<h1>התחברות</h1>
 			<div className="social-container">
 				<a href="#" className="social"><i className="fa fa-facebook-f"></i></a>
@@ -89,14 +89,14 @@ export default function Login() {
         <input {...passwordRef} type="password" className='form-control' />
         {errors.password && <div className="text-danger">Enter min 3 charts password</div>}
 			<a href="#">שכחת סיסמה?</a>
-			<button type="submit">התחבר</button>
+			<button className="button-login" type="submit">התחבר</button>
 		</form>
 	</div>
 	<div className="overlay-container">
 			<div className="overlay-panel overlay-right w-100">
 				<h1>שלום, חבר!</h1>
 				<p>הזן את פרטיך האישיים והתחיל איתנו את המסע</p>
-				<button className="ghost" id="signUp">הירשם</button>
+				<button className="ghost button-login" id="signUp">הירשם</button>
 			</div>
 	</div>
 </div>
