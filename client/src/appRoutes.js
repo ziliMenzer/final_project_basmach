@@ -14,6 +14,7 @@ import Progress from './student_comps/progress'
 import Calendar from './events_comps/calendar'
 import AllStudents from './teacher_comps/allStudents'
 import UsersList from './admin_comps/userList'
+import RegisterTeacher from './teacher_comps/registerTeacher'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
@@ -37,14 +38,14 @@ export default function AppRoutes() {
                 {/* outlet */}
                 <Header />
                 <Routes>
-                    <Route index element={<Home />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route index element={<Login />} />
+                    {/* <Route path="/login" element={<Login />} /> */}
                     <Route path="/logout" element={<Logout />} />
                     <Route path='/allTeachersList' element={<AllTeachersList />} />
                     <Route path="/routeRegister" element={<RouteRegister />} />
                     <Route path="/register" element={<SignUp />} />
-                    <Route path="/registerUser" element={<RegisterUser />} />
-                    <Route path="/registerTeacher" element={<SignUpTeacher />} />
+                    <Route path="/registerUser" element={< RegisterTeacher />} />
+                    {/* <Route path="/registerTeacher" element={<SignUpTeacher />} /> */}
                     <Route path="/myInfo" element={<MyInfo />} />
                     <Route path="/progress" element={<Progress />} />
                     <Route path="/calendar" element={<Calendar />} />
