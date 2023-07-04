@@ -68,7 +68,7 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
       return true;
     }
 
-    return "Start time should be greater than the current time";
+    return "זמן התחלת אירוע צריך להיות גדול מהזמן הנוכחי";
   };
 
   const validateEndTime = (value) => {
@@ -80,7 +80,7 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
       return true;
     }
 
-    return "End time should be greater than the start time and the current time";
+    return "זמן סיום אירוע צריך להיות גדול מזמן התחלת איורע ומהזמן הנוכחי";
   };
   return (
     <Modal show={true} onHide={onClose}>
@@ -93,13 +93,13 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
           <Form.Group controlId="title">
             <Form.Label>Title:</Form.Label>
             <Form.Control type="text" defaultValue={title}
-              {...register('title', { required: 'Title is required' })}
+              {...register('title', { required: 'כותרת אירוע חובה' })}
               onChange={handleTitleChange} />
             {errors.title && <div className="error">{errors.title.message}</div>}
           </Form.Group>
           <Form.Group controlId="student_id">
             <Form.Label>Student:</Form.Label>
-            <Form.Select defaultValue={student_id} {...register('student_id', { required: 'Student is required' })} onChange={handleStudentChange}>
+            <Form.Select defaultValue={student_id} {...register('student_id', { required: 'בחירת תלמיד היא חובה' })} onChange={handleStudentChange}>
               <option value="">Select a student</option>
               {myStudents.map(student => (
                 <option defaultValue={student.user_id} key={student.user_id}>
@@ -113,7 +113,7 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
             <Form.Label>Start Time:</Form.Label>
             <Form.Control type="datetime-local"
               {...register('start', {
-                required: 'Start time is required',
+                required: 'זמן התחלת ארוע הוא חובה',
                 validate: validateStartTime
               })}
               defaultValue={start} onChange={handleStartChange} />
@@ -122,7 +122,7 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
           <Form.Group controlId="end">
             <Form.Label>End Time:</Form.Label>
             <Form.Control type="datetime-local" {...register('end', {
-              required: 'End time is required',
+              required: 'זמן סיום אירוע הוא חובה',
               validate: validateEndTime
             })} defaultValue={end} onChange={handleEndChange} />
             {errors.end && <div className="error">{errors.end.message}</div>}
@@ -130,9 +130,9 @@ const EditEventModal = ({ event, onUpdate, onDelete, onClose }) => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button variant="danger" onClick={handleDelete}>Delete</Button>
-          <Button variant="primary"  type='submit'>Update</Button>
+          <Button variant="secondary" onClick={onClose}>ביטול</Button>
+          <Button variant="danger" onClick={handleDelete}>מחיקה</Button>
+          <Button variant="primary"  type='submit'>עדכון</Button>
         </Modal.Footer>
       </Form>
     </Modal>

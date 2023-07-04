@@ -16,6 +16,7 @@ import MyInfo from './student_comps/myInfo'
 import Progress from './student_comps/progress'
 import Calendar from './events_comps/calendar'
 import AllStudents from './teacher_comps/allStudents'
+import UsersList from './admin_comps/userList'
 
 export default function AppRoutes() {
     const [user, setUser] = useState({});
@@ -51,6 +52,7 @@ export default function AppRoutes() {
                     <Route path="/progress" element={<Progress />} />
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/allStudents" element={<AllStudents />} />
+                    <Route path="/usersList" element={<UsersList />} />
                 </Routes>
                 <Footer />
             </AppContext.Provider>

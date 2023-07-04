@@ -24,10 +24,6 @@ const SignUpTeacher = () => {
 
     const doApi = async (_dataBody) => {
         try {
-            // const teacher = {
-            //     user_id: _dataBody._id, 
-
-            // }
             const url = API_URL + '/teachers/';
             const { data2 } = await doApiMethod(url, "POST", _dataBody);
             nav("/allStudent")

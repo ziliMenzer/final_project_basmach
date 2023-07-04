@@ -19,7 +19,7 @@ const InputLicenseType = (props) => {
                     type="text"
                     className={className}
                     placeholder="License type" />
-                {errors.license_type && errors.license_type.type == 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.license_type?.message}</div>}
+                {errors.license_type && errors.license_type.type === 'required' && <div className='text-danger font-bold bg-red-800 border-gray-300  py-1'>{errors?.license_type?.message}</div>}
             </div>
         </>
     )

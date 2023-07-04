@@ -102,7 +102,7 @@ router.get("/myInfo/:teacherId", auth, async (req, res) => {
 // });
 
 // post teacher
-router.post("/", authAdmin, async (req, res) => {
+router.post("/", async (req, res) => {
   let valdiateBody = teacherValid(req.body);
   if (valdiateBody.error) {
     return res.status(400).json(valdiateBody.error.details)

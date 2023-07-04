@@ -51,7 +51,6 @@ export default function PaymentReminder(props) {
                 }
             })
             console.log(resp)
-            // alert("sent succeessfully");
             return resp;
 
         } catch (err) {

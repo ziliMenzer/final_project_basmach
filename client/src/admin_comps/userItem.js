@@ -8,7 +8,7 @@ export default function UserItem(props) {
   const onRoleClick = async () => {
     let bodyData;
     if (item.role == "user") {
-      if (window.confirm(`האם אתה רוצה להפוך ${item.first_name}למורה?`)) {
+      if (window.confirm(`האם אתה רוצה להפוך את  ${item.first_name} למורה?`)) {
         bodyData = { role: "teacher" }
       }
       else {
@@ -32,7 +32,7 @@ export default function UserItem(props) {
     }
     catch (err) {
       console.log(err.response);
-      alert("There is  a problem, or you are trying to change superAdmin to user");
+      alert("התרחשה שגיאה או שינוי לא חוקי של משתמש");
     }
   }
   const onActiveClick = async () => {
@@ -54,11 +54,11 @@ export default function UserItem(props) {
     }
     catch (err) {
       console.log(err.response);
-      alert("There is  a problem, or you are trying to change superAdmin to user");
+      alert("התרחשה שגיאה או שינוי לא חוקי של משתמש");
     }
   }
   const onDelClick = async () => {
-    if (window.confirm("Are you sure you want to delete: " + item.first_name)) {
+    if (window.confirm("האם למחוק את:" + item.first_name+"?")) {
       try {
         let url = API_URL + "/users/" + item._id;
         let resp = await doApiMethodToken(url, "DELETE");
@@ -69,7 +69,7 @@ export default function UserItem(props) {
       }
       catch (err) {
         console.log(err.response);
-        alert("There problem , try again later")
+        alert("התרחשה שגיאה, נסה שוב מאוחר יותר")
       }
 
     }

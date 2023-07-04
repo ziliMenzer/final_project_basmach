@@ -26,44 +26,23 @@ export default function UsersList() {
 
 
   return (
-    <div className='container'>
+    <div className='container text-center'>
       {/* <CheckAdminComp /> */}
-      <h1>List of users in systems</h1>
+      <h1>רשימת המשתמשים במערכת</h1>
       <table className='table table-striped table-hover'>
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
-            <th>Address</th>
-            <th>Active</th>
-            <th>Delete</th>
+            <th>שם</th>
+            <th>מייל</th>
+            <th>טלפון</th>
+            <th>תפקיד</th>
+            <th>כתובת</th>
+            <th>פעיל</th>
+            <th>מחיקה</th>
           </tr>
         </thead>
         <tbody>
-        {/* <tr>
-      <td>{props.index + 1}</td>
-      <td>{item.first_name} {item.last_name}</td>
-      <td>{item.email}</td>
-      <td>{item.phone}</td>
-      <td>
-        <button onClick={onRoleClick}>
-          {item.role}
-        </button>
-      </td>
-      <td>{item.rank}</td>
-      <td>{item.address}</td>
-      <td>{item.profile_image}</td>
-      <td>
-        <button onClick={onActiveClick}>
-          {String(item.active)}
-        </button>
-      </td> */}
-      {/* <td>
-        <button className='badge bg-danger'>Delete User</button>
-      </td> */}
           {usersArray.map((item,i) => {
             return(
               <UserItem key={item._id} doApi={doApi} index={i} item={item}/>

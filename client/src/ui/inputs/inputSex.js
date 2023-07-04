@@ -19,7 +19,7 @@ const InputSex = (props) => {
                     type="text"
                     className={className}
                     placeholder="Sex" />
-                {errors.sex && errors.sex.type == 'required' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.sex?.message}</div>}
+                {errors.sex && errors.sex.type === 'required' && <div className='text-white font-bold bg-red-800 border-gray-300  py-1'>{errors?.sex?.message}</div>}
             </div>
         </>
     )

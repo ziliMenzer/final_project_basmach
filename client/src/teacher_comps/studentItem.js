@@ -5,7 +5,6 @@ export default function StudentItem(props) {
     let student = props.item;
     let onStatusChange = props.onStatusChange;
     const [showModal, setShowModal] = useState(false);
-    // const [statusModal, setStatusModal] = useState(false);
     const [status, setStatus] = useState(student.status);
     const [teacherId, setTeacherId] = useState(student.teacher_id);
     const changeStatus = () => {
@@ -16,7 +15,7 @@ export default function StudentItem(props) {
                 newStatus = "active";
             } else {
                 setTeacherId(null);
-                return; // Exit the function without making the API call
+                return;
             }
         } else if (student.status === "active") {
             newStatus = "un-active";
