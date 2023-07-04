@@ -1,31 +1,22 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const jwt = require("jsonwebtoken");
-const { config } = require("../config/secret")
 
 let eventSchema = new mongoose.Schema({
-
-    id_student: Number,
-    id_teacher: String,
-    type_of_event: String,
-    length_event: Number,
-    date: Date,
-    subject: String
+    teacher_id:String,
+    student_id:String,
+    title: String,
+    start: Date,
+    end: Date
 });
-exports.eventModel = mongoose.model("events", eventSchema);
-// exports.createToken = (user_id, user_role) => {
-//     let token = jwt.sign({ _id: user_id, role: user_role }, config.tokenSecret, { expiresIn: "60mins" });
-//     return token;
-// }
+exports.EventModel = mongoose.model("events", eventSchema);
 
 exports.eventValid = (_reqBody) => {
     let joiSchema = Joi.object({
-        id_student: Joi.string().min(2).max(15).required(),
-        id_teacher: Joi.string().min(2).max(15).required(),
-        type_of_event: Joi.string().min(2).max(99).required(),
-        length_event:Joi.number().min(0).max(2000).allow(null,""),
-        date: Joi.date().required(),
-        subject: Joi.number().min(0).max(250).allow(null, ""),
+        teacher_id: Joi.string().min(2).max(999).required(),
+        student_id: Joi.string().min(2).max(999).required(),
+        title: Joi.string().min(2).max(300).required(),
+        start: Joi.date().required(),
+        end: Joi.date().required()
     });
 
     return joiSchema.validate(_reqBody);

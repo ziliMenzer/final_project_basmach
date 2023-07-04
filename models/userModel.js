@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
 // const pattern = "/(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!#.])[A-Za-zd$@$!%*?&.]{8,20}/";
 let userSchema = new mongoose.Schema({
-  id: Number,
+  // id: Number,
   first_name: String,
   last_name: String,
   email: String,
@@ -12,6 +12,9 @@ let userSchema = new mongoose.Schema({
   password: String,
   address: String,
   profile_image: String,
+  active:{
+    type:Boolean, default:true
+  },
   date_created: {
     type: Date, default: Date.now()
   },

@@ -8,22 +8,42 @@ export default function AllTeachersList() {
         doApi()
     }, []);
 
+    // const doApi = async () => {
+    //     try {
+
+    //         const {data}  = await doApiGet(url);
+    //         data.map(async item=>{
+    //             url = API_URL + `/teachers/teacherInfo/${item.user_id}`;
+    //             let teacher = await doApiGet(url);
+    //             setTeachersList(teachersList=>[...teachersList,teacher.data])
+    //         });
+    //     }
+    //     catch (err) {
+    //         console.log(err)
+    //      }    
+    // }
     const doApi = async () => {
+        let url = API_URL + '/teachers/';
         try {
-            let url = API_URL + '/teachers/';
-            const {data}  = await doApiGet(url);
-            data.map(async item=>{
-                url = API_URL + `/teachers/teacherInfo/${item.user_id}`;
-                let teacher = await doApiGet(url);
-                setTeachersList(teachersList=>[...teachersList,teacher.data])
-            });
+            const { data } = await doApiGet(url);
+            console.log(data);
+            let new_url;
+            for (const element of data) {
+                const encodedSearch = encodeURIComponent(element.user_id);
+                new_url = API_URL + `/teachers/teacherInfo/${encodedSearch}`;
+                console.log(new_url);
+                let teacher = await doApiGet(new_url);
+                console.log(teacher.data);
+                setTeachersList(teachersList => [...teachersList, teacher.data])
+            }
+            console.log(teachersList);
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-         }    
-    }
+    };
     return (
         <div className='container'>
+            <button>סינון מורים</button>
             <h2>Teachers List:</h2>
             <div className='row g-2'>
                 {teachersList.map(item => {
@@ -31,7 +51,7 @@ export default function AllTeachersList() {
                         <TeacherItem key={item._id} item={item} />
                     )
                 })}
-                {teachersList.length<1 && <h2>Loading....</h2>}
+                {teachersList.length < 1 && <h2>Loading....</h2>}
             </div>
         </div>
     )

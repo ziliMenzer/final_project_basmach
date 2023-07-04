@@ -4,19 +4,18 @@ import { AppContext } from "../src/context/userProvider"
 import Login from './general_comps/login'
 import Home from './general_comps/home'
 import AllTeachersList from './student_comps/allTeachersList'
-import Header from './layout/header'
+import StudentHome from './student_comps/studentHome'
 import Logout from './general_comps/logout'
-import SignUp from './student_comps/register'
-import SignUpTeacher from './teacher_comps/resgisterTeacher'
-import RegisterUser from './teacher_comps/registerUser'
 
 export default function AppRoutes() {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
+    const [myStudents,setMyStudents]=useState([]);
     return (
         <BrowserRouter>
 
             <AppContext.Provider value={{
-                user,setUser
+                user,setUser,
+                myStudents,setMyStudents
             }}>
                 <Header/>
 
@@ -31,12 +30,15 @@ export default function AppRoutes() {
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<SignUp />} />
-                    <Route path="/registerTeacher" element={<RegisterUser />} />
-                    <Route path='/allTeachersList' element={<AllTeachersList/>}/>
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path='allTeachersList' element={<AllTeachersList />} />
+                    {/* <Route path="/counter" element={<Counter />} />
+                    <Route path="/pixa/:searchQ" element={<AppPixa />} />
+                    <Route path="/casino" element={<AppCasino />} />
+                    <Route path="/cars" element={<CarsList />} /> */}
                 </Routes>
                 {/* outlet */}
-                <footer className='p-2 container bg-danger'>footer</footer>
+                <footer className='p-2 container-fluid bg-danger'>footer</footer>
             </AppContext.Provider>
         </BrowserRouter>
     )

@@ -67,7 +67,7 @@ export const doApiMethod = async (_url, _method, _body = {}) => {
     throw err;
   }
 }
-export const doApiMethodFillDetales = async (_url, _method, _body = {}) => {
+export const doApiMethodFillDetailes = async (_url, _method, _body = {}) => {
   try {
     let resp = await axios({
       method: _method,
@@ -84,7 +84,7 @@ export const doApiMethodFillDetales = async (_url, _method, _body = {}) => {
   }
 }
 
-export const doApiMethodToken = async (_url, _method, _body = {}) => {
+export const doApiMethodToken = async (_url, _method, _body) => {
   try {
     let resp = await axios({
       method: _method,
@@ -117,7 +117,7 @@ export const doApiMethodRefresh = async (_url) => {
   }
 }
 
-export const doApiMethodTokenNotStringify = async (_url, _method, _body = {}) => {
+export const doApiMethodTokenNotStringify = async (_url, _method, _body) => {
   try {
     let resp = await axios({
       method: _method,
