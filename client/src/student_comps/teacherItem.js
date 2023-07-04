@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { AppContext } from '../context/userProvider';
 import { API_URL, doApiMethodTokenNotStringify } from '../services/apiService';
+import './teacherItem.css'
 import { Alert } from 'react-bootstrap';
 export default function TeacherItem(props) {
   const { user, setUser } = useContext(AppContext);
@@ -11,23 +12,22 @@ export default function TeacherItem(props) {
     if (user.teacher_id !== null) {
       setShowAlert(true);
     }
-    else {
-      const updatedStudent = {
-        user_id: user.user_id,
-        status: "waiting",
-        teacher_id: item.user_id
-      }
-      try {
-        console.log(user.user_id);
-        let url = API_URL + `/students/${user.user_id}`;
-        const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedStudent);
-        console.log(data);
-      }
-      catch (err) {
-        console.log(err);
-      }
+    const updatedStudent = {
+      user_id: user.user_id,
+      status: "waiting",
+      teacher_id: item.user_id
     }
-
+    try {
+      console.log(user.user_id);
+      let url = API_URL + `/students/${user.user_id}`;
+      const { data } = await doApiMethodTokenNotStringify(url, "PUT", updatedStudent);
+      console.log(data);
+      //setUser()
+      //setMyStudents(updatedMyStudents);
+    }
+    catch (err) {
+      console.log(err);
+    }
     setShowMessage(false);
 
   }
@@ -43,11 +43,8 @@ export default function TeacherItem(props) {
       <h2>rating: {item.rating}</h2>
       <button onClick={() => setShowMessage(true)}>בחירת המורה</button>
       {showMessage && <div>האם את/ה בטוח/ה שתרצה ללמוד אצל: {item.first_name} {item.last_name}
-        <button onClick={addStudent}>אישור</button>
+        <button className='btn-teacher' onClick={addStudent}>אישור</button>
       </div>}
-
-
-
     </div>
   )
 }
