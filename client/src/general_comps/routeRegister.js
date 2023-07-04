@@ -6,7 +6,7 @@ const RouteRegister = () => {
     const nav = useNavigate();
 
     const onTeacher = () => {
-        nav("/registerUser")
+        nav("/registerTeacher")
     }
 
     const onStudent = () => {

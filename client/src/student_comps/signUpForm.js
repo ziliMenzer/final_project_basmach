@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Helmet } from 'react-helmet';
 import InputFirstName from '../ui/inputs/inputFirstName';
 import InputLastName from '../ui/inputs/inputLastName';
 import InputPasswordLinked from '../ui/inputs/inputPasswordLinked';
