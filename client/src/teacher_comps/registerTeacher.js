@@ -2,13 +2,12 @@ import React from 'react'
 import { get, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { API_URL, doApiMethod, doApiMethodSignUpLogin } from '../services/apiService';
 import InputSex from '../ui/inputs/inputSex';
 import InputPaymentPerLesson from '../ui/inputs/inputPaymentPerLesson';
 import InputLicenseType from '../ui/inputs/inputLicenseType';
-import SignUpForm from '../student_comps/signUpForm';
 import InputFirstName from '../ui/inputs/inputFirstName';
 import InputLastName from '../ui/inputs/inputLastName';
 import InputPasswordLinked from '../ui/inputs/inputPasswordLinked';
@@ -18,6 +17,7 @@ import InputConfirmPassword from '../ui/inputs/inputConfirmPassword';
 import FilterCities from '../ui/inputs/filterCities';
 import _ from 'lodash';
 import '../student_comps/register.css'
+import { AppContext } from '../context/userProvider';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -27,7 +27,7 @@ const RegisterTeacher = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isContinue, setisContinue] = useState(false);
     const [details, setDetails] = useState({});
-
+    const { setUser } = useContext(AppContext)
     const nav = useNavigate();
     let { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
@@ -63,6 +63,11 @@ const RegisterTeacher = () => {
             console.log(teacher)
             const url2 = API_URL + '/teachers/';
             const { data2 } = await doApiMethod(url2, "POST", teacher);
+            let userState = {
+                ...data,
+                ...data2
+            }
+            setUser(userState);
             nav("/confirmation")
         } catch (err) {
             alert(err.response.data.msg || err.response.data[0].message)
@@ -182,11 +187,10 @@ const RegisterTeacher = () => {
                             </div>
                         </form>
                     </div>
-                    <div className="overlay-container">
+                    <div className="overlay-container text-white">
                         <div className="overlay-panel overlay-right w-100">
                             <h1>שלום, חבר!</h1>
                             <p>הזן את פרטיך האישיים והתחיל איתנו את המסע</p>
-                            <button className="ghost button-signUp" id="signUp">הירשם</button>
                         </div>
                     </div>
                 </div >

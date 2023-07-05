@@ -3,7 +3,7 @@ import { get, useForm } from 'react-hook-form'
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { API_URL, doApiMethod, doApiMethodSignUpLogin } from '../services/apiService';
 import InputFirstName from '../ui/inputs/inputFirstName';
 import InputLastName from '../ui/inputs/inputLastName';
@@ -13,6 +13,7 @@ import InputPhoneLinked from '../ui/inputs/inputPhoneLinked';
 import InputConfirmPassword from '../ui/inputs/inputConfirmPassword';
 import FilterCities from '../ui/inputs/filterCities';
 import './register.css'
+import { AppContext } from '../context/userProvider';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -20,8 +21,7 @@ function classNames(...classes) {
 
 const SignUp = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
-    // const [data, setData] = useState({});
-
+    const { setUser } = useContext(AppContext);
     const nav = useNavigate();
     let { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
@@ -40,7 +40,13 @@ const SignUp = () => {
             }
             const url2 = API_URL + '/students/';
             const { data3 } = await doApiMethod(url2, "POST", student);
-            nav("/allTeachersList")
+            let user = {
+                ...data,
+                ...data3
+            }
+            setUser(user);
+            nav("/allTeachersList");
+
         } catch (err) {
             alert(err.response.data.msg || err.response.data[0].message)
             setIsSubmitted(false);
@@ -137,11 +143,10 @@ const SignUp = () => {
                             </div>
                         </form>
                     </div>
-                    <div className="overlay-container">
+                    <div className="overlay-container text-white">
                         <div className="overlay-panel overlay-right w-100">
                             <h1>שלום, חבר!</h1>
                             <p>הזן את פרטיך האישיים והתחיל איתנו את המסע</p>
-                            <button className="ghost button-signUp" id="signUp">הירשם</button>
                         </div>
                     </div>
                 </div>
@@ -150,4 +155,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default SignUp;

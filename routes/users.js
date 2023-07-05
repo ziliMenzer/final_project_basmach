@@ -17,8 +17,6 @@ router.get("/getAllUsers", authAdmin, async (req, res) => {
 
 router.post("/signup", async (req, res) => {
     let valdiateBody = userValid(req.body);
-    console.log("start signup in user");
-    console.log(valdiateBody);
     if (valdiateBody.error) {
         console.log("valdiateBody error");
         return res.status(400).json(valdiateBody.error.details)

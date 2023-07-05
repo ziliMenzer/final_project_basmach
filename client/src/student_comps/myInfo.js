@@ -88,7 +88,7 @@ export default function MyInfo() {
                                 <div className="row g-0">
                                     <div className="cl1 col-md-4 gradient-custom text-center text-white">
 
-                                        <img src={user.profile_image}
+                                        <img src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAD4aGpGBywJ72t5-eTriFKWqFe9kDuX1WRiR1krjacxFN0BKjhJU6iStrvpwBaNEKN8&usqp=CAU"}
                                             alt="profile image" className="rounded-circle shadow-4-strong my-5 " />
 
                                         <h5 defaultValue={user.first_name + " " + user.last_name}>{user.first_name + " " + user.last_name}</h5>

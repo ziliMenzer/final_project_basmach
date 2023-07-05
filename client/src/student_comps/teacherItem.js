@@ -5,15 +5,14 @@ import { API_URL, doApiMethodTokenNotStringify } from '../services/apiService';
 import './teacherItem.css'
 
 export default function TeacherItem(props) {
-  const { user, setUser } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const item = props.item;
   const [showMessage, setShowMessage] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [teacherId,setTeacherId] =useState(user.teacher_id)
   const addStudent = async () => {
-    if (user.teacher_id !== null) {
-      setShowAlert(true);
-    }
-    else {
+    if (teacherId == null) {
+
       const updatedStudent = {
         user_id: user.user_id,
         status: "waiting",
@@ -29,9 +28,11 @@ export default function TeacherItem(props) {
         console.log(err);
       }
     }
-
+    else {
+      console.log("hdjs")
+      setShowAlert(true);
+    }
     setShowMessage(false);
-
   }
   return (
     <div className='teacher-item my-3'>
