@@ -1,0 +1,15 @@
+.teacher-btn, .student-btn {
+    margin-top: 70px;
+    margin-left: 35px;
+    margin-right: 35px;
+    border-radius: 50%;
+    padding: 100px;
+}
+
+.teacher-btn {
+    background-image: url("https://hakita.co.il/upload/timthumb.php?src=/upload/avatars/788868017eeb395642cbd500dcbc3b51.png&w=250&h=250");
+}
+
+.student-btn {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAD4aGpGBywJ72t5-eTriFKWqFe9kDuX1WRiR1krjacxFN0BKjhJU6iStrvpwBaNEKN8&usqp=CAU")
+}

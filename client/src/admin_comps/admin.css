@@ -1,0 +1,13 @@
+.admin-header nav li a{
+ color:white;
+ text-decoration: none;
+ padding:0 8px;
+}
+
+.admin-header nav li a:hover{
+  color:yellow;
+}
+.table{
+  width: 80%;
+  margin: 0 auto;
+}

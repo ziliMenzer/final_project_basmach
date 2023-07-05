@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret")
 // const pattern = "/(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!#.])[A-Za-zd$@$!%*?&.]{8,20}/";
 let userSchema = new mongoose.Schema({
-  id: Number,
+  // id: Number,
   first_name: String,
   last_name: String,
   email: String,
@@ -12,11 +12,14 @@ let userSchema = new mongoose.Schema({
   password: String,
   address: String,
   profile_image: String,
+  active:{
+    type:Boolean, default:true
+  },
   date_created: {
     type: Date, default: Date.now()
   },
   role: {
-    type: String, default: "user"
+    type: String, default: "student"
   },
 });
 exports.UserModel = mongoose.model("users", userSchema);
@@ -31,11 +34,10 @@ exports.userValid = (_reqBody) => {
     last_name: Joi.string().min(2).max(99).required(),
     email: Joi.string().min(2).max(99).email().required(),
     phone: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
-    address: Joi.string().min(5).max(100).required(),
+    address: Joi.string().min(5).max(100),
     password: Joi.string()
-      .required()
       .min(8)
-      .max(20),
+      .max(70),
     profile_image: Joi.string().allow(null, ""),
     role: Joi.string().allow("user")
   })
@@ -47,9 +49,9 @@ exports.loginValid = (_reqBody) => {
   let joiSchema = Joi.object({
     email: Joi.string().min(2).max(99).email().required(),
     password: Joi.string()
-    .required()
-    .min(8)
-    .max(20)
+      .required()
+      .min(8)
+      .max(20)
   });
   return joiSchema.validate(_reqBody);
 }
